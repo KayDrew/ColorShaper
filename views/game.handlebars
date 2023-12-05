@@ -37,7 +37,7 @@
     
 
     let audio= document.querySelector("#music");
-    audio.volume=0.5;
+    audio.volume=0.4;
 function playGame(){
 
    swal({title:"Dive In!",
@@ -65,11 +65,27 @@ else{
 }
 
     }
+
+    if ('speechSynthesis' in window) {
+ // Speech Synthesis supported 🎉
+
+ var msg = new SpeechSynthesisUtterance();
+msg.text = "Show an image of a circle";
+msg.pitch=1.6;
+msg.lang=""
+ var voices=window.speechSynthesis.getVoices();
+ console.log(voices);
+window.speechSynthesis.speak(msg);
+
+
+
+}else{
+  // Speech Synthesis Not Supported 😣
+  alert("Sorry, your browser doesn't support text to speech!");
+}
    }
 
-   else{
-    
-   }
+ 
 });
 }
 
