@@ -1,5 +1,19 @@
+<div class="topnav">
+    <span id="welcomeMsg">Welcome {{username}}</span>
+    <span id="currentLevel">{{currentLevel}}</span>
+    <span id="points">{{pointsTotal}}</span>
+    <form action="/settings" method="get">
+        <button type="button">&#9881;</button>
+    </form>
+</div>
 <div class="container">
- 
- content of game
-
+    <div class="questionSection">
+        Show an image of a circle
+    </div>
+    <div class="timer">
+        <div class="timerTitle">remaining time:</div> 
+        {{!-- We should add handlebars here for a dynamic timer based on the settings if we got time--}}
+        <div class="countDown">00:10</div> 
+    </div>
+    <div class="cameraViewBox"></div>
 </div>
