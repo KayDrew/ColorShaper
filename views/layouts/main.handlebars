@@ -1,22 +1,27 @@
 <html lang="en">
-
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Waiter Web-app</title>
     <link rel="stylesheet" href="/css/style.css" />
   </head>
-
   <body>
     <div class="container">
+      {{#if (bool gameStart)}}
+      <div class="topnav">
+        <span id="welcomeMsg">Welcome {{username}}!</span>
+        <span id="currentLevel">Current Level: {{currentLevel}}</span>
+        <span id="score">Score: {{score}}</span>
+        <form class="settings" action="/settings" method="get">
+            <button type="button">&#9881;</button>
+        </form>
+      </div>
+      {{/if}}
       <header>
         <img class="logo" src="/shapes.png" />
         <h1>ColorShaper App</h1>
       </header>
-
       {{{body}}}
-
     </div>
   </body>
-
 </html>

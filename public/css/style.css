@@ -86,3 +86,30 @@ input[type = text]{
     transform: translateX(26px);
   }
   
+  /* ? Game page specific styling */
+  .topnav {
+    overflow: hidden;
+    background-color: #2196F3;
+  }
+  
+  .topnav button {
+    float: right;
+    /* background-color: #04AA6D;
+    color:#fefefe; */
+    text-align: center;
+    padding: 0px;
+    text-decoration: none;
+    font-size: 50px;
+    margin: 0px;
+    line-height: 1;
+  }
+  
+  .topnav button:hover {
+    /* background-color: #ddd;
+    color: black; */
+    cursor:pointer;
+  }
+  /* overides display block passed by form default css */
+  .settings {
+    display: contents;
+  }
