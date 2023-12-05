@@ -4,11 +4,14 @@ import bodyParser from "body-parser";
 import pgPromise from "pg-promise";
 import flash from "express-flash";
 import session from "express-session";
+import routes from "./routes/routes.js";
 
 const app = express()
 
 // use the express.static built-in middleware to serve static file 'css'
 app.use(express.static(('public')))
+
+app.use(express.static('audio'));
 
 //use session to maintain data on the application
 app.use(session({
@@ -30,6 +33,8 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 
+const route= routes();
+
 app.get("/", async function(req,res){
     res.render("index")
 })
@@ -38,7 +43,9 @@ app.get("/game", async function(req,res){
     res.render("game")
 })
 
-const PORT = process.env.PORT || 4000
+app.get("/settings",route.settings);
+
+const PORT = process.env.PORT || 5432
 
 app.listen(PORT, function(){
     console.log('App starting on port', PORT);

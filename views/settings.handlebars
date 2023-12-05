@@ -1,0 +1,73 @@
+    <div class="container">
+    <div class="hidden" style="display:none">
+        <audio controls loop id="music" >
+            <source src="music.ogg" type="audio/ogg">
+            <source src="music.mp3" type="audio/mpeg">
+          Your browser does not support the audio element.
+          </audio>
+    </div>
+    <div>
+        
+    <form action="/music" method="post">
+    <span>Music</span>
+
+  <label class="switch">
+  
+    <input type="checkbox" id="playMusic"  onclick="saveSettings()"  checked/>
+    <span class="slider"></span>
+  </label>
+  </form>
+</div><br>
+<div>
+  <span>Sound</span>
+  <label class="switch">
+    <input type="checkbox" id="sound"  checked/>
+    <span class="slider"></span>
+  </label>
+</div>
+<script>
+
+    
+
+        let playMusic= document.querySelector("#playMusic");
+    let audio= document.querySelector("#music");
+    audio.volume=0.6;
+
+    
+function play(){
+audio.play();
+console.log("click")
+
+}
+
+
+function stop(){
+	
+audio.pause();
+
+console.log("click")
+
+}
+
+
+async function saveSettings(){
+if(playMusic.checked){
+    var isPlaying = audio.currentTime > 0 && !audio.paused && !audio.ended 
+    && audio.readyState > audio.HAVE_CURRENT_DATA;
+
+if (!isPlaying) {
+  audio.play();
+  console.log("playimg")
+}
+else{
+    console.log("not playing")
+}
+
+}
+
+else{
+   await stop();
+}
+}
+
+</script>
