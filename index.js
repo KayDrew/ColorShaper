@@ -7,8 +7,35 @@ import session from "express-session";
 
 const app = express()
 
+// use the express.static built-in middleware to serve static file 'css'
+app.use(express.static(('public')))
+
+//use session to maintain data on the application
+app.use(session({
+    secret : 'This is a string',
+    resave: false,
+    saveUninitialized: true
+}));
+
+app.use(flash());
+
+// set and callback engine 
+app.engine('handlebars', engine());
+app.set('view engine', 'handlebars');
+app.set('views', './views');
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+// parse application/json
+app.use(bodyParser.json())
+
+
 app.get("/", async function(req,res){
-    res.send("This is a ColorShaper App")
+    res.render("index")
+})
+
+app.get("/game", async function(req,res){
+    res.render("game")
 })
 
 const PORT = process.env.PORT || 4000

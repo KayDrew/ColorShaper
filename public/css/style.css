@@ -1,0 +1,40 @@
+.container {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #e0fbfc;
+    margin-bottom: 1.5em;
+}
+header{
+    display: flex;
+    
+    justify-content: center;
+    margin-top: 2em;
+}
+.logo{
+    height: 5em;
+    width: 5em;
+
+}
+h1{
+    background-image: radial-gradient(#ff9f1c, #011627);
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+    /* font-weight: 800; */
+}
+button{
+    padding: 1em;
+    background-color: #e71d36;
+    color: whitesmoke;
+    margin-bottom: 1.5em;
+}
+.game-content{
+    text-align: center;
+    
+}
+input[type = text]{ 
+        padding: 1em;
+        margin-bottom: 1.5em;
+
+}
