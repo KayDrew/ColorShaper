@@ -1,5 +1,62 @@
-<div class="container">
+<body  onload="playGame()">
+<div class="container" >
+    
+             <div class="hidden" style="display:none">
+      <audio controls loop id="music" >
+            <source src="music.ogg" type="audio/ogg">
+            <source src="music.mp3" type="audio/mpeg">
+          Your browser does not support the audio element.
+          </audio>
+    </div>
+
  
- content of game
+ <h2 id="prompt"></h2>
 
 </div>
+</body>
+<script>
+
+    let play=localStorage.getItem("play");
+
+    
+
+    let audio= document.querySelector("#music");
+    audio.volume=0.5;
+function playGame(){
+
+   swal({title:"Dive In!",
+   button:{text:"Yay!",className:"btn"},
+   className:"alert"})
+.then((value) => {
+
+if(!play){
+    play="true";
+}
+   
+   if(value==true){
+
+    if(play=="true"){
+
+    var isPlaying = audio.currentTime > 0 && !audio.paused && !audio.ended 
+    && audio.readyState > audio.HAVE_CURRENT_DATA;
+
+if (!isPlaying) {
+  audio.play();
+ 
+}
+else{
+    console.log("not playing")
+}
+
+    }
+   }
+
+   else{
+    
+   }
+});
+}
+
+
+
+</script>

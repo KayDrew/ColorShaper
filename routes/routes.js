@@ -10,9 +10,14 @@ export default function routes(){
     }
 
 
+    async function startGame(req,res){
+
+
+    }
 
     return{
         settings,
+        startGame,
        
     }
 }
