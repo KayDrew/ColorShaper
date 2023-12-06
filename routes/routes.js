@@ -10,7 +10,7 @@ export default function routes(color){
                 req.flash('error', 'Please enter a name');
                 res.redirect('/');
             } else {
-                res.render('game',{player_name});
+                res.redirect('game',);
             }
 
         } catch (error) {
@@ -22,9 +22,10 @@ export default function routes(color){
         try {
              const allQuestions = await color.questions()
              const randomQuestion = allQuestions[Math.floor(Math.random() * allQuestions.length)];
-             
-
-             res.render('game',{randomQuestion})
+             console.log(randomQuestion)
+             res.render('game',{
+                randomQuestion
+            })
 
         } catch (error) {
             console.log(error)

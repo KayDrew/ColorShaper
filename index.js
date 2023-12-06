@@ -88,15 +88,8 @@ app.get("/", async function(req,res){
         gameStart: false
     });
 })
-app.post("/game",route.gamePlay)
-app.get("/game", async function(req,res){
-    res.render("game",{
-        gameStart: true,
-        username: "Laura",
-        currentLevel: "Easy",
-        score: 10
-    });
-})
+app.post("/",route.home)
+app.get("/game", route.gamePlay)
 
 app.get("/settings",route.settings);
 
