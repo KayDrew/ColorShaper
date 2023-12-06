@@ -1,85 +1,76 @@
 <body  onload="playGame()">
-
-<div class="container">
-    <div class="questionSection">
-        Show an image of a circle
+    <div class="container">
+        <div class="questionSection">
+            Show an image of a circle
+        </div>
+        {{#if messages.timesUp}}
+            <p class="message msgError">{{messages.timesUp}}</p>
+        {{/if}}
+        {{#if messages.success}}
+            <p class="message msgSuccess">{{messages.success}}</p>
+        {{/if}}
+        <div class="timer">
+            <div class="timerTitle">remaining time:</div> 
+            {{!-- We should add handlebars here for a dynamic timer based on the settings if we got time--}}
+            <div class="countDown">00:10</div> 
+        </div>
+        <div class="cameraViewBox"></div>
+        <div class="hidden" style="display:none">
+            <audio controls loop id="music" >
+                <source src="music.ogg" type="audio/ogg">
+                <source src="music.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
     </div>
-    <div class="timer">
-        <div class="timerTitle">remaining time:</div> 
-        {{!-- We should add handlebars here for a dynamic timer based on the settings if we got time--}}
-        <div class="countDown">00:10</div> 
-    </div>
-    <div class="cameraViewBox"></div>
-
-    
-             <div class="hidden" style="display:none">
-      <audio controls loop id="music" >
-            <source src="music.ogg" type="audio/ogg">
-            <source src="music.mp3" type="audio/mpeg">
-          Your browser does not support the audio element.
-          </audio>
-    
-</div>
-</div>
 </body>
 <script>
     
     let play=localStorage.getItem("play");
 
-    
-
     let audio= document.querySelector("#music");
     audio.volume=0.4;
-function playGame(){
+    
+    function playGame(){
+        swal({title:"Dive In!",
+                button:{text:"Yay!",className:"btn"},
+                className:"alert"})
+        .then((value) => {
+            if(!play){
+                play="true";
+            }
 
-   swal({title:"Dive In!",
-   button:{text:"Yay!",className:"btn"},
-   className:"alert"})
-.then((value) => {
+            if(value==true){
+                if(play=="true"){
+                    var isPlaying = audio.currentTime > 0 && !audio.paused && !audio.ended 
+                            && audio.readyState > audio.HAVE_CURRENT_DATA;
 
-if(!play){
-    play="true";
-}
-   
-   if(value==true){
+                    if (!isPlaying) {
+                        audio.play();
+                    }
+                    else{
+                        console.log("not playing")
+                    }
+                }
 
-    if(play=="true"){
+                if ('speechSynthesis' in window) {
+                    // Speech Synthesis supported 🎉
+                    var msg = new SpeechSynthesisUtterance();
+                    msg.text = "Show an image of a circle";
+                    msg.pitch=1.6;
+                    msg.lang=""
+                    
+                    var voices=window.speechSynthesis.getVoices();
 
-    var isPlaying = audio.currentTime > 0 && !audio.paused && !audio.ended 
-    && audio.readyState > audio.HAVE_CURRENT_DATA;
+                    console.log(voices);
 
-if (!isPlaying) {
-  audio.play();
- 
-}
-else{
-    console.log("not playing")
-}
-
+                    window.speechSynthesis.speak(msg);
+                }
+                else {
+                    // Speech Synthesis Not Supported 😣
+                    alert("Sorry, your browser doesn't support text to speech!");
+                }
+            }
+        });
     }
-
-    if ('speechSynthesis' in window) {
- // Speech Synthesis supported 🎉
-
- var msg = new SpeechSynthesisUtterance();
-msg.text = "Show an image of a circle";
-msg.pitch=1.6;
-msg.lang=""
- var voices=window.speechSynthesis.getVoices();
- console.log(voices);
-window.speechSynthesis.speak(msg);
-
-
-
-}else{
-  // Speech Synthesis Not Supported 😣
-  alert("Sorry, your browser doesn't support text to speech!");
-}
-   }
-
- 
-});
-}
-
-
 </script>

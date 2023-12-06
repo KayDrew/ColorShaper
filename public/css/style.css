@@ -1,3 +1,9 @@
+/* *Import Font */
+@import url('https://fonts.googleapis.com/css2?family=Playpen+Sans:wght@100;200;300;400;500;600;700;800&display=swap');
+/* *General Styling */
+body{
+  font-family: 'Playpen Sans',sans-serif;
+}
 .container {
     width: 80%;
     margin-left: auto;
@@ -95,17 +101,12 @@ input[type = text]{
     background-color: #2196F3;
     padding: 0 10px;
   }
+
   .left,.right{
     display:flex;
     align-items: center;
   }
-  /* .right{
-    display:flex;
-    justify-content: flex-end;
-  } */
-  /* .topnav #welcomeMsg{
-    float: left;
-  } */
+
   .topnav #welcomeMsg,
   .topnav #currentLevel,
   .topnav #score {
@@ -113,6 +114,7 @@ input[type = text]{
     /* margin:2vh; */
     padding:2vh;
   } 
+
   .topnav button {
     /* float: right; */
     /* background-color: #04AA6D;
@@ -136,7 +138,31 @@ input[type = text]{
   .settings {
     display: contents;
   }
+  .questionSection {
+    display: flex;
+    justify-content: center;
+    font-size: xx-large;
+  }
 
+  .timer {
+    display: flex;
+    justify-content: center;
+    font-size: xx-large;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid black;
+    border-radius: 10px;
+    margin:5vh auto;
+    width: 50%;
+  }
+
+  .cameraViewBox {
+    border: 1px solid black;
+    border-radius: 10px;
+    margin:5vh auto;
+    height: 30vh;    
+    width: 50%;
+  }
   .alert{   background-color: #cd717c;
     color: aliceblue;
   }
@@ -144,3 +170,25 @@ input[type = text]{
     color: black;
    
   }
+
+/* ? Flash message styling */
+.msgError {
+  color:#cc0f35;
+  font-weight:bold;
+  border: solid 2px #fbcad3;
+  background: #fbcad3;
+  margin: 0 auto;
+  border-radius: 5px;
+  text-align: center;
+  width: 90%;
+}
+.msgSuccess {
+color:#228b22;
+font-weight:bold;
+border: solid 2px #bce3bc;
+background: #bce3bc;
+margin: 0 auto;
+border-radius: 5px;
+text-align: center;
+width: 90%;
+}
