@@ -1,8 +1,7 @@
-const Message = document.querySelector('.message');
-
-if(Message.innerHTML !== '' ){
-    setTimeout(function(){
-      Message.innerHTML = ''
-    
-    }, 3500);
-}
+// Automatically remove flash messages after 3 seconds
+setTimeout(() => {
+  const flashMessages = document.querySelectorAll(".message");
+  flashMessages.forEach((message) => {
+      message.remove();
+  });
+}, 3000);
