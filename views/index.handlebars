@@ -7,10 +7,13 @@
             <a href="">Download resource to help play game</a>
         </div>
         <br>
-        <form action="/game" method="get">
-            <input type="text" placeholder="Player Name">
+          <span class="error">
+            {{messages.error}}
+        </span>
+        <form action="/" method="post">
+            <input type="text" name="playerName" placeholder="Player Name">
             <br>
-            <button type="submit" id="start">Start Game</button>
+            <button type="submit">Start Game</button>
         </form>
     </div>
 </div>

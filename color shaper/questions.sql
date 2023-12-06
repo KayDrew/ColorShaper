@@ -1,0 +1,10 @@
+INSERT INTO questions (question,game_level) VALUES ('Show an image of a Circle','easy');
+INSERT INTO questions (question,game_level) VALUES ('Show an image of a Square','easy');
+INSERT INTO questions (question,game_level) VALUES ('Show an image of a Triangle','easy');
+INSERT INTO questions (question,game_level) VALUES ('Show an image of a Rectangle','easy');
+INSERT INTO questions (question,game_level) VALUES ('Show an image of a Oval','easy');
+INSERT INTO questions (question,game_level) VALUES ('Show an image of a Star','easy');
+INSERT INTO questions (question,game_level) VALUES ('Show an image of a Heart','easy');
+INSERT INTO questions (question,game_level) VALUES ('Show an image of a Rhombus/Diamond','easy');
+INSERT INTO questions (question,game_level) VALUES ('Show an image of a Pentagon','easy');
+INSERT INTO questions (question,game_level) VALUES ('Show an image of a Hexagon','easy');

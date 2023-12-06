@@ -1,93 +1,116 @@
-<body  onload="playGame()">
+<body onload="playGame()">
 
-<div class="topnav">
-    <span id="welcomeMsg">Welcome {{username}}</span>
-    <span id="currentLevel">{{currentLevel}}</span>
-    <span id="points">{{pointsTotal}}</span>
-    <form action="/settings" method="get">
-        <button type="button">&#9881;</button>
-    </form>
-</div>
-<div class="container">
-    <div class="questionSection">
-        Show an image of a circle
+    <div class="topnav">
+        <span id="welcomeMsg"><h3>Welcome {{username}}</h3></span>
+        <span id="currentLevel"><h3>{{randomQuestion.game_level}}</h3></span>
+        <span id="points">{{pointsTotal}}</span>
+        <form action="/settings" method="get">
+            <button type="submit" class="settings">&#9881;</button>
+        </form>
     </div>
-    <div class="timer">
-        <div class="timerTitle">remaining time:</div> 
-        {{!-- We should add handlebars here for a dynamic timer based on the settings if we got time--}}
-        <div class="countDown">00:10</div> 
-    </div>
-    <div class="cameraViewBox"></div>
+    <div class="container">
+        <div class="questionSection">
+            <h2>{{randomQuestion.question}}</h2>
+        </div>
+        <div class="timer">
+            <div class="timerTitle"><h4>remaining time :<span class="countDown">00:10</span></h4></div>
+            {{!-- We should add handlebars here for a dynamic timer based on the settings if we got time--}}
+           
+        </div>
+        <div class="cameraViewBox">
 
-    
-             <div class="hidden" style="display:none">
-      <audio controls loop id="music" >
-            <source src="music.ogg" type="audio/ogg">
-            <source src="music.mp3" type="audio/mpeg">
-          Your browser does not support the audio element.
-          </audio>
-    
-</div>
-</div>
+        </div>
+
+
+        <div class="hidden" style="display:none">
+            <audio controls loop id="music">
+                <source src="music.ogg" type="audio/ogg">
+                <source src="music.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+
+        </div>
+    </div>
 </body>
 <script>
-    
-    let play=localStorage.getItem("play");
 
-    
+    let play = localStorage.getItem("play");
 
-    let audio= document.querySelector("#music");
-    audio.volume=0.4;
-function playGame(){
 
-   swal({title:"Dive In!",
-   button:{text:"Yay!",className:"btn"},
-   className:"alert"})
-.then((value) => {
 
-if(!play){
-    play="true";
-}
-   
-   if(value==true){
+    let audio = document.querySelector("#music");
+    audio.volume = 0.2;
+    function playGame() {
 
-    if(play=="true"){
+        swal({
+            title: "Dive In!",
+            button: { text: "Yay!", className: "btn" },
+            className: "alert"
+        })
+            .then((value) => {
 
-    var isPlaying = audio.currentTime > 0 && !audio.paused && !audio.ended 
-    && audio.readyState > audio.HAVE_CURRENT_DATA;
+                if (!play) {
+                    play = "true";
+                }
 
-if (!isPlaying) {
-  audio.play();
- 
-}
-else{
-    console.log("not playing")
-}
+                if (value == true) {
 
+                    if (play == "true") {
+
+                        var isPlaying = audio.currentTime > 0 && !audio.paused && !audio.ended
+                            && audio.readyState > audio.HAVE_CURRENT_DATA;
+                            
+                        // Function for timer 
+                        var seconds = 10;
+
+                        function updateCountdown() {
+                            var minutes = Math.floor(seconds / 60);
+                            var remainingSeconds = seconds % 60;
+
+                            // Basic syntanx for ternary operator (condition) ? valueIfTrue : valueIfFalse;
+                            document.querySelector('.countDown').innerHTML = (minutes < 10 ? '0' : '') + minutes + ':' + (remainingSeconds < 10 ? '0' : '') + remainingSeconds;
+
+                            if (seconds > 0) {
+                                seconds--;
+                            } else {
+                                clearInterval(interval);
+                                document.querySelector('.countDown').innerHTML = 'Next Question';
+                            }
+                        }
+
+                        var interval = setInterval(updateCountdown, 1000)
+
+                        if (!isPlaying) {
+                            audio.play();
+
+                        }
+                        else {
+                            console.log("not playing")
+                        }
+
+                    }
+
+                    if ('speechSynthesis' in window) {
+                        // Speech Synthesis supported 🎉
+
+                        var msg = new SpeechSynthesisUtterance();
+                        msg.text = "{{randomQuestion.question}}";
+                        msg.pitch = 1.6;
+                        msg.lang = ""
+                        var voices = window.speechSynthesis.getVoices();
+                        console.log(voices);
+                        window.speechSynthesis.speak(msg);
+
+
+
+                    } else {
+                        // Speech Synthesis Not Supported 😣
+                        alert("Sorry, your browser doesn't support text to speech!");
+                    }
+                }
+
+
+            });
     }
-
-    if ('speechSynthesis' in window) {
- // Speech Synthesis supported 🎉
-
- var msg = new SpeechSynthesisUtterance();
-msg.text = "Show an image of a circle";
-msg.pitch=1.6;
-msg.lang=""
- var voices=window.speechSynthesis.getVoices();
- console.log(voices);
-window.speechSynthesis.speak(msg);
-
-
-
-}else{
-  // Speech Synthesis Not Supported 😣
-  alert("Sorry, your browser doesn't support text to speech!");
-}
-   }
-
- 
-});
-}
-
 
 </script>
