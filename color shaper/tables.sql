@@ -17,5 +17,5 @@ CREATE TABLE player_stats (
    level text not null,
    hint_count int not null,
    foreign key (player_id) references player(id)
-)
+);
 

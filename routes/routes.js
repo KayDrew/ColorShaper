@@ -20,8 +20,8 @@ export default function routes(color){
 
     async function gamePlay (req,res){
         try {
-             const allQuestions = await color.questions()
-             const randomQuestion = allQuestions[Math.floor(Math.random() * allQuestions.length - 1)];
+             const easyQuestions = await color.easyQuestions()
+             const randomQuestion = easyQuestions[Math.floor(Math.random() * easyQuestions.length - 1)];
              console.log(randomQuestion)
              res.render('game',{
                 gameStart: true,
