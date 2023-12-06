@@ -25,6 +25,8 @@ export default function routes(color){
              console.log(randomQuestion)
              res.render('game',{
                 gameStart: true,
+                currentLevel: 'easy',
+                score: 10,
                 randomQuestion
             })
 
