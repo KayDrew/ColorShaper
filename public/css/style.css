@@ -68,8 +68,16 @@ input[type = text]{
         margin-bottom: 1.5em;
 
 }
-  
-  /* ? Game page specific styling */
+
+/* ? Landing page specific styling */
+.playerForm{
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+    align-items: center;
+}
+
+/* ? Game page specific styling */
   .topnav {
     display:flex;
     justify-content: space-between;
