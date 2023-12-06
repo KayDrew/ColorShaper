@@ -10,6 +10,8 @@ body{
     margin-right: auto;
     background-color: #e0fbfc;
     margin-bottom: 1.5em;
+    padding-bottom: 2px;
+    border-radius: 12px;
 }
 header{
     display: flex;
@@ -57,6 +59,8 @@ button{
     background-color: #e71d36;
     color: whitesmoke;
     margin-bottom: 1.5em;
+    border: none;
+    border-radius: 3px;
 }
 .game-content{
     text-align: center;
@@ -226,7 +230,7 @@ input[type = text]{
   }
   
   input:checked + .slider {
-    background-color: #2196F3;
+    background-color:  rgb(113, 113, 231);
   }
 
   input:checked + .slider:before {
@@ -245,4 +249,16 @@ input[type = text]{
   button#settingsReset, button#settingsBack {
     margin: 0.5em;
     cursor: pointer;
+  }
+
+  a{
+    text-decoration: none;
+  }
+
+
+  #settingsBack{
+
+    width: 200px;
+    background-color: rgb(113, 113, 231);
+  
   }
