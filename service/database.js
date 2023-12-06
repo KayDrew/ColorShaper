@@ -1,7 +1,8 @@
 export default function colorShaper(db){
 
     async function easyQuestions(){
-        return await db.manyOrNone(`SELECT * FROM questions WHERE game_level = easy`)
+
+        return await db.manyOrNone(`SELECT * FROM questions WHERE game_level ='easy'`)
     }
 
     async function mediumQuestions(){

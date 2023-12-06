@@ -93,6 +93,10 @@ app.get("/game", route.gamePlay)
 
 app.get("/settings",route.settings);
 
+app.get("/color",async function(req,res){
+    res.render("color")
+})
+
 const PORT = process.env.PORT || 4000;
 
 app.listen(PORT, function(){
