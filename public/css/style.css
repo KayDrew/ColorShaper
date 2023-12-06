@@ -113,3 +113,10 @@ input[type = text]{
   .settings {
     display: contents;
   }
+  .alert{   background-color: #cd717c;
+    color: aliceblue;
+  }
+  .btn{
+    color: black;
+   
+  }

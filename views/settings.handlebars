@@ -1,11 +1,6 @@
+    <body onload="check()">
     <div class="container">
-    <div class="hidden" style="display:none">
-        <audio controls loop id="music" >
-            <source src="music.ogg" type="audio/ogg">
-            <source src="music.mp3" type="audio/mpeg">
-          Your browser does not support the audio element.
-          </audio>
-    </div>
+ 
     <div>
         
     <form action="/music" method="post">
@@ -13,7 +8,7 @@
 
   <label class="switch">
   
-    <input type="checkbox" id="playMusic"  onclick="saveSettings()"  checked/>
+    <input type="checkbox" id="playMusic"  onclick="saveSettings()"  />
     <span class="slider"></span>
   </label>
   </form>
@@ -21,53 +16,46 @@
 <div>
   <span>Sound</span>
   <label class="switch">
-    <input type="checkbox" id="sound"  checked/>
+    <input type="checkbox" id="sound" />
     <span class="slider"></span>
   </label>
 </div>
-<script>
-
-    
-
-        let playMusic= document.querySelector("#playMusic");
-    let audio= document.querySelector("#music");
-    audio.volume=0.6;
-
-    
-function play(){
-audio.play();
-console.log("click")
-
-}
+<script> 
 
 
-function stop(){
-	
-audio.pause();
 
-console.log("click")
+function check(){
 
+let isChecked=localStorage.getItem("play");
+let playMusic= document.querySelector("#playMusic");
+
+  if(!isChecked){
+isChecked=false;
+  }
+
+  else{
+    if(isChecked=="true"){
+      isChecked=true;
+    }
+    else{
+      isChecked=false;
+    }
+  }
+
+playMusic.checked=isChecked;
 }
 
 
 async function saveSettings(){
 if(playMusic.checked){
-    var isPlaying = audio.currentTime > 0 && !audio.paused && !audio.ended 
-    && audio.readyState > audio.HAVE_CURRENT_DATA;
-
-if (!isPlaying) {
-  audio.play();
-  console.log("playimg")
-}
-else{
-    console.log("not playing")
-}
+localStorage.setItem("play","true")
 
 }
 
 else{
-   await stop();
+localStorage.setItem("play","false")
 }
 }
 
 </script>
+</body>
