@@ -21,7 +21,7 @@ export default function routes(color){
     async function gamePlay (req,res){
         try {
              const allQuestions = await color.questions()
-             const randomQuestion = allQuestions[Math.floor(Math.random() * allQuestions.length)];
+             const randomQuestion = allQuestions[Math.floor(Math.random() * allQuestions.length - 1)];
              console.log(randomQuestion)
              res.render('game',{
                 gameStart: true,
@@ -29,11 +29,6 @@ export default function routes(color){
                 score: 10,
                 randomQuestion
             })
-             //Because 'length' starts at 1, I think we need to subtract 1 right at the end of this line so as to accommodate the question in index 0
-             const randomQuestion = allQuestions[Math.floor(Math.random() * allQuestions.length)]; 
-             
-
-             res.render('game',{randomQuestion})
 
         } catch (error) {
             console.log(error)
