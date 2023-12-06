@@ -12,6 +12,7 @@ CREATE TABLE player (
 
 CREATE TABLE player_stats (
    id serial primary key,
+   player_id int not null,
    score int not null,
    level text not null,
    hint_count int not null,
