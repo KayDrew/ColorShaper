@@ -1,33 +1,40 @@
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ColorShaper</title>
-  <link rel="stylesheet" href="/css/style.css" />
-   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js" ></script>
-</head>
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Waiter Web-app</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ColorShaper</title>
     <link rel="stylesheet" href="/css/style.css" />
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js" ></script>
   </head>
 
-<body>
-  <div class="container">
-    <header>
-      <img class="logo" src="/shapes.png">
-      <h1>ColorShaper App</h1>  
-    </header>
+  <body>
+    <div class="container">
+      {{#if gameStart}}
+      <div class="topnav">
+        <div class="left">
+          <span id="welcomeMsg">Welcome, {{username}}!</span>
+        </div>
+        <div class="right">
+          <span id="currentLevel">Current Level: {{currentLevel}}</span>
+          <span id="score">Score: {{score}}</span>
+          <form class="settings" action="/settings" method="get">
+              <button type="submit">&#9881;</button>
+          </form>
+        </div>        
+      </div>
+      {{/if}}
+      <header>
+        <img class="logo" src="/shapes.png" />
+        <h1>ColorShaper App</h1>
+      </header>
 
-
- 
       {{{body}}}
       
   </div>
   <script src="/script.js"></script>
 </body>
 
+    </div>
+  </body>
 
 </html>

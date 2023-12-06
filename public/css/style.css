@@ -1,3 +1,9 @@
+/* *Import Font */
+@import url('https://fonts.googleapis.com/css2?family=Playpen+Sans:wght@100;200;300;400;500;600;700;800&display=swap');
+/* *General Styling */
+body{
+  font-family: 'Playpen Sans',sans-serif;
+}
 .container {
     width: 80%;
     margin-left: auto;
@@ -85,6 +91,78 @@ input[type = text]{
 
   input:checked + .slider:before {
     transform: translateX(26px);
+  }
+  
+  /* ? Game page specific styling */
+  .topnav {
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    overflow: hidden;
+    background-color: #2196F3;
+    padding: 0 10px;
+  }
+
+  .left,.right{
+    display:flex;
+    align-items: center;
+  }
+
+  .topnav #welcomeMsg,
+  .topnav #currentLevel,
+  .topnav #score {
+    font-size: x-large;
+    /* margin:2vh; */
+    padding:2vh;
+  } 
+
+  .topnav button {
+    /* float: right; */
+    /* background-color: #04AA6D;
+    color:#fefefe; */
+    text-align: center;
+    padding: 0px;
+    text-decoration: none;
+    font-size: 50px;
+    margin: 0px;
+    line-height: 1;
+  }
+  
+  .topnav button:hover {
+    /* background-color: #ddd;
+    color: black; */
+    cursor:pointer;
+  }
+  
+  /* overides display block passed by form default css */
+  /* this is so that the settings icon lines up properly */
+  .settings {
+    display: contents;
+  }
+  .questionSection {
+    display: flex;
+    justify-content: center;
+    font-size: xx-large;
+  }
+
+  .timer {
+    display: flex;
+    justify-content: center;
+    font-size: xx-large;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid black;
+    border-radius: 10px;
+    margin:5vh auto;
+    width: 50%;
+  }
+
+  .cameraViewBox {
+    border: 1px solid black;
+    border-radius: 10px;
+    margin:5vh auto;
+    height: 30vh;    
+    width: 50%;
   }
   .alert{   background-color: #cd717c;
     color: aliceblue;
