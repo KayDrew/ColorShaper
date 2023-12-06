@@ -37,9 +37,8 @@
     </div>
 </body>
 <script>
-
-    let play = localStorage.getItem("play");
-
+let play = localStorage.getItem("play");
+    let sound= localStorage.getItem("sound");
 
 
     let audio = document.querySelector("#music");
@@ -55,15 +54,11 @@
 
                 if (!play) {
                     play = "true";
+                    localStorage.setItem("play",play);
                 }
 
                 if (value == true) {
-
-                    if (play == "true") {
-
-                        var isPlaying = audio.currentTime > 0 && !audio.paused && !audio.ended
-                            && audio.readyState > audio.HAVE_CURRENT_DATA;
-                            
+                
                         // Function for timer 
                         var seconds = 10;
 
@@ -84,6 +79,13 @@
 
                         var interval = setInterval(updateCountdown, 1000)
 
+
+                    if (play == "true") {
+
+                        var isPlaying = audio.currentTime > 0 && !audio.paused && !audio.ended
+                            && audio.readyState > audio.HAVE_CURRENT_DATA;
+                            
+                
                         if (!isPlaying) {
                             audio.play();
 
@@ -93,6 +95,15 @@
                         }
 
                     }
+                    
+                    if(!sound){             
+                    sound="true";
+                    localStorage.setItem("sound",sound)
+                    }
+                    
+                    else{
+                    
+                    if(sound=="true"){
 
                     if ('speechSynthesis' in window) {
                         // Speech Synthesis supported 🎉
@@ -100,9 +111,8 @@
                         var msg = new SpeechSynthesisUtterance();
                         msg.text = "{{randomQuestion.question}}";
                         msg.pitch = 1.6;
-                        msg.lang = ""
-                        var voices = window.speechSynthesis.getVoices();
-                        console.log(voices);
+                        msg.lang = "en"
+                 
                         window.speechSynthesis.speak(msg);
 
 
@@ -111,10 +121,15 @@
                         // Speech Synthesis Not Supported 😣
                         alert("Sorry, your browser doesn't support text to speech!");
                     }
+                    }
+                    
+                    }
                 }
 
 
             });
+            
+            
     }
 
 </script>

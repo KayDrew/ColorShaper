@@ -2,8 +2,8 @@
     <div class="container">
       <div class="settingControls">
         <h2>Settings</h2>
-        <div class="settingOption">  
-          <form class="settings" action="/music" method="post">
+        <div>  
+          <form action="/music" method="post">
             <span>Music</span>
             <label class="switch">
               <input type="checkbox" id="playMusic"  onclick="saveSettings()"  />
@@ -11,10 +11,10 @@
             </label>
           </form>
         </div>
-        <div class="settingOption">
+        <div>
           <span>Sound</span>
           <label class="switch">
-            <input type="checkbox" id="sound" />
+            <input type="checkbox"  id="playSound" onclick="soundSettings()"/>
             <span class="slider"></span>
           </label>
         </div>
@@ -35,26 +35,50 @@
 function check(){
 
 let isChecked=localStorage.getItem("play");
+let soundChecked= localStorage.getItem("sound");
 let playMusic= document.querySelector("#playMusic");
+const playSound= document.querySelector("#playSound");
 
   if(!isChecked){
 isChecked=false;
   }
 
   else{
+  
     if(isChecked=="true"){
       isChecked=true;
     }
     else{
       isChecked=false;
     }
+    
   }
 
 playMusic.checked=isChecked;
+
+if(!soundChecked){
+soundChecked=false;
+
+}
+
+else{
+
+    if(soundChecked=="true"){
+      soundChecked=true;
+    }
+    else{
+      soundChecked=false;
+    }
+  }
+
+playSound.checked= soundChecked;
+
+
 }
 
 
-async function saveSettings(){
+ function saveSettings(){
+ 
 if(playMusic.checked){
 localStorage.setItem("play","true")
 
@@ -63,6 +87,20 @@ localStorage.setItem("play","true")
 else{
 localStorage.setItem("play","false")
 }
+
+}
+
+function  soundSettings(){
+
+if(playSound.checked){
+
+localStorage.setItem("sound","true");
+}
+
+else{
+localStorage.setItem("sound","false");
+}
+
 }
 
 </script>
