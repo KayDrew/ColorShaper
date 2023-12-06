@@ -25,8 +25,8 @@ export default function routes(color){
              console.log(randomQuestion)
              res.render('game',{
                 gameStart: true,
-                currentLevel: 'easy',
-                score: 10,
+                currentLevel: 'easy',   // Devan Commented: this needs to return from the all questions I guess
+                score: 10,              // Devan Commented: this will have to be returned from the user profile
                 randomQuestion
             })
 
