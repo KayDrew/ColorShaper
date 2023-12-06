@@ -8,14 +8,15 @@
         </div>
         <br>
         
-        {{#if messages.error}}
-        {{!-- message class is used by js to hide message after 3 seconds --}}
-        {{!-- msgError/msgSuccess is used to style the message accordingly --}}
-        <span class="message msgError">
-            {{messages.error}}
-        </span>
-        {{/if}}
-        <form action="/" method="post">
+        
+        <form class="playerForm" action="/" method="post">
+            {{#if messages.error}}
+            {{!-- message class is used by js to hide message after 3 seconds --}}
+            {{!-- msgError/msgSuccess is used to style the message accordingly --}}
+            <span class="message msgError">
+                {{messages.error}}
+            </span>
+            {{/if}}
             <input type="text" name="playerName" placeholder="Player Name">
             <br>
             <button type="submit">Start Game</button>
