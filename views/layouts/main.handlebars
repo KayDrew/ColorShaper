@@ -9,6 +9,16 @@
 
   <body>
     <div class="container">
+      {{#if gameStart}}
+      <div class="topnav">
+        <span id="welcomeMsg">Welcome, {{username}}!</span>
+        <span id="currentLevel">Current Level: {{currentLevel}}</span>
+        <span id="score">Score: {{score}}</span>
+        <form class="settings" action="/settings" method="get">
+            <button type="button">&#9881;</button>
+        </form>
+      </div>
+      {{/if}}
       <header>
         <img class="logo" src="/shapes.png" />
         <h1>ColorShaper App</h1>
