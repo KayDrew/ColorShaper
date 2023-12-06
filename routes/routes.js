@@ -24,6 +24,7 @@ export default function routes(color){
              const randomQuestion = allQuestions[Math.floor(Math.random() * allQuestions.length)];
              console.log(randomQuestion)
              res.render('game',{
+                gameStart: true,
                 randomQuestion
             })
 
