@@ -1,25 +1,33 @@
     <body onload="check()">
     <div class="container">
- 
-    <div>
-        
-    <form action="/music" method="post">
-    <span>Music</span>
-
-  <label class="switch">
-  
-    <input type="checkbox" id="playMusic"  onclick="saveSettings()"  />
-    <span class="slider"></span>
-  </label>
-  </form>
-</div><br>
-<div>
-  <span>Sound</span>
-  <label class="switch">
-    <input type="checkbox" id="sound" />
-    <span class="slider"></span>
-  </label>
-</div>
+      <div class="settingControls">
+        <h2>Settings</h2>
+        <div>  
+          <form action="/music" method="post">
+            <span>Music</span>
+            <label class="switch">
+              <input type="checkbox" id="playMusic"  onclick="saveSettings()"  />
+              <span class="slider"></span>
+            </label>
+          </form>
+        </div>
+        <div>
+          <span>Sound</span>
+          <label class="switch">
+            <input type="checkbox" id="sound" />
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
+      <div class="settingBtns">
+        <form action="/resetScore" method="post">
+          <button type="submit" id="settingsReset">Reset Score</button>
+        </form>
+        <form action="/game" method="get">
+          <button type="submit" id="settingsBack">Back</button>
+        </form>
+      </div>
+    </div>
 <script> 
 
 

@@ -170,6 +170,20 @@ input[type = text]{
     color: black;
    
   }
+/* ? Settings page Styling */
+.settingControls{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;  
+  align-items: center;
+  font-size: xx-large;
+  
+}
+.settingBtns{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 /* ? Flash message styling */
 .msgError {
