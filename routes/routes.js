@@ -25,12 +25,12 @@ export default function routes(color){
              console.log(randomQuestion)
              res.render('game',{
                 gameStart: true,
-                currentLevel: 'easy',
-                score: 10,
+                currentLevel: 'easy',   // Devan Commented: this needs to return from the all questions I guess
+                score: 10,              // Devan Commented: this will have to be returned from the user profile
                 randomQuestion
             })
              //Because 'length' starts at 1, I think we need to subtract 1 right at the end of this line so as to accommodate the question in index 0
-             const randomQuestion = allQuestions[Math.floor(Math.random() * allQuestions.length)]; 
+             //const randomQuestion = allQuestions[Math.floor(Math.random() * allQuestions.length)]; 
              
 
              res.render('game',{randomQuestion})
