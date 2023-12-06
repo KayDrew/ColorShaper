@@ -10,7 +10,7 @@ export default function routes(color){
                 req.flash('error', 'Please enter a name');
                 res.redirect('/');
             } else {
-                res.render('game',{player_name});
+                res.redirect('game',);
             }
 
         } catch (error) {
@@ -21,6 +21,14 @@ export default function routes(color){
     async function gamePlay (req,res){
         try {
              const allQuestions = await color.questions()
+             const randomQuestion = allQuestions[Math.floor(Math.random() * allQuestions.length)];
+             console.log(randomQuestion)
+             res.render('game',{
+                gameStart: true,
+                currentLevel: 'easy',
+                score: 10,
+                randomQuestion
+            })
              //Because 'length' starts at 1, I think we need to subtract 1 right at the end of this line so as to accommodate the question in index 0
              const randomQuestion = allQuestions[Math.floor(Math.random() * allQuestions.length)]; 
              
