@@ -88,12 +88,33 @@ input[type = text]{
   
   /* ? Game page specific styling */
   .topnav {
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
     overflow: hidden;
     background-color: #2196F3;
+    padding: 0 10px;
   }
-  
+  .left,.right{
+    display:flex;
+    align-items: center;
+  }
+  /* .right{
+    display:flex;
+    justify-content: flex-end;
+  } */
+  /* .topnav #welcomeMsg{
+    float: left;
+  } */
+  .topnav #welcomeMsg,
+  .topnav #currentLevel,
+  .topnav #score {
+    font-size: x-large;
+    /* margin:2vh; */
+    padding:2vh;
+  } 
   .topnav button {
-    float: right;
+    /* float: right; */
     /* background-color: #04AA6D;
     color:#fefefe; */
     text-align: center;
@@ -109,10 +130,13 @@ input[type = text]{
     color: black; */
     cursor:pointer;
   }
+  
   /* overides display block passed by form default css */
+  /* this is so that the settings icon lines up properly */
   .settings {
     display: contents;
   }
+
   .alert{   background-color: #cd717c;
     color: aliceblue;
   }
