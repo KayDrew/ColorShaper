@@ -10,7 +10,7 @@ export default function routes(color){
                 req.flash('error', 'Please enter a name');
                 res.redirect('/');
             } else {
-                res.redirect('game');
+                res.render('game',{player_name});
             }
 
         } catch (error) {

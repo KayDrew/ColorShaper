@@ -88,7 +88,7 @@ app.get("/", async function(req,res){
         gameStart: false
     });
 })
-
+app.post("/game",route.gamePlay)
 app.get("/game", async function(req,res){
     res.render("game",{
         gameStart: true,
@@ -100,7 +100,7 @@ app.get("/game", async function(req,res){
 
 app.get("/settings",route.settings);
 
-const PORT = process.env.PORT || 5432;
+const PORT = process.env.PORT || 4000;
 
 app.listen(PORT, function(){
     console.log('App starting on port', PORT);

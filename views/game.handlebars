@@ -1,13 +1,6 @@
 <body onload="playGame()">
 
-    <div class="topnav">
-        <span id="welcomeMsg"><h3>Welcome {{username}}</h3></span>
-        <span id="currentLevel"><h3>{{randomQuestion.game_level}}</h3></span>
-        <span id="points">{{pointsTotal}}</span>
-        <form action="/settings" method="get">
-            <button type="submit" class="settings">&#9881;</button>
-        </form>
-    </div>
+   
     <div class="container">
         <div class="questionSection">
             <h2>{{randomQuestion.question}}</h2>

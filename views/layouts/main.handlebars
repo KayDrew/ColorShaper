@@ -12,10 +12,10 @@
       {{#if gameStart}}
       <div class="topnav">
         <div class="left">
-          <span id="welcomeMsg">Welcome, {{username}}!</span>
+          <span id="welcomeMsg">Welcome, {{player_name}}!</span>
         </div>
         <div class="right">
-          <span id="currentLevel">Current Level: {{currentLevel}}</span>
+          <span id="currentLevel">Current Level: {{randomQuestion.game_level}}</span>
           <span id="score">Score: {{score}}</span>
           <form class="settings" action="/settings" method="get">
               <button type="submit">&#9881;</button>
