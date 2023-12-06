@@ -1,4 +1,4 @@
-const Message = document.querySelector('.error');
+const Message = document.querySelector('.message');
 
 if(Message.innerHTML !== '' ){
     setTimeout(function(){

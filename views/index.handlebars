@@ -7,9 +7,14 @@
             <a href="">Download resource to help play game</a>
         </div>
         <br>
-          <span class="error">
+        
+        {{#if messages.error}}
+        {{!-- message class is used by js to hide message after 3 seconds --}}
+        {{!-- msgError/msgSuccess is used to style the message accordingly --}}
+        <span class="message msgError">
             {{messages.error}}
         </span>
+        {{/if}}
         <form action="/" method="post">
             <input type="text" name="playerName" placeholder="Player Name">
             <br>

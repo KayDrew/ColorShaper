@@ -2,12 +2,24 @@
     <div class="container">
         <div class="questionSection">
             <h2>{{randomQuestion.question}}</h2>
-            </div>
+        </div>
         <div class="timer">
-            
+            {{#if messages.error}}
+            {{!-- message class is used by js to hide message after 3 seconds --}}
+            {{!-- msgError/msgSuccess is used to style the message accordingly --}}
+            <span class="message msgError">
+                {{messages.error}}
+            </span>
+            {{/if}}
             <div class="timerTitle"><h4>remaining time :<span class="countDown">00:10</span></h4></div>
             {{!-- We should add handlebars here for a dynamic timer based on the settings if we got time--}}
-           
+            {{#if messages.success}}
+            {{!-- message class is used by js to hide message after 3 seconds --}}
+            {{!-- msgError/msgSuccess is used to style the message accordingly --}}
+            <span class="message msgSuccess">
+                {{messages.success}}
+            </span>
+            {{/if}}
         </div>
         <div class="cameraViewBox">
 
