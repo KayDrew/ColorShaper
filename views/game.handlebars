@@ -46,6 +46,10 @@
     const easyQuestions=['Show an image of a Triangle','Show an image of a Circle','Show an image of a Square','Show an image of a Oval','Show an image of a Rectangle'];
     let question='{{randomQuestion.question}}';
     let questionText= document.querySelector("#question");
+    
+    //set levels and score initial values into local storage
+    localStorage.setItem('player-level', 'easy');
+    localStorage.setItem('score', '0');
 
     let audio = document.querySelector("#music");
     audio.volume = 0.2;
@@ -64,6 +68,7 @@
                 if (!play) {
                     play = "true";
                     localStorage.setItem("play",play);
+        
                 }
 
                 if (value == true) {
@@ -155,6 +160,9 @@
     // Update the score element
     const scoreElement = document.querySelector('#score');
     scoreElement.innerText = score;
+
+    const levelElement = document.querySelector('#currentLevel');
+    levelElement.innerText = levels[levelIndex];
        
         const URL = "https://teachablemachine.withgoogle.com/models/0ipS3AKwb/";
 
@@ -211,7 +219,7 @@
         const hexagonData = prediction[8]
         const pentagonData = prediction[9]
 
-        
+        console.log('Yellow Data: ', yellowData);
         
         if(circleData.probability > 0.95 && '{{randomQuestion.question}}' === 'Show an image of a Circle'){
             console.log('Looks like a circle')
@@ -443,11 +451,7 @@
     }
 
     function playerLevel(){
-        console.log('Player level function called!!')
-        console.log('{{levels}}')
-
-        let level = '';
-        let levels = '{{levels}}'.split(',');
+        //use global levels array and levelIndex
 
         
     }
