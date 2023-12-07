@@ -6,6 +6,7 @@ export default function routes(color){
         try {
 
             const player_name = req.body.playerName
+            req.session.playerName = player_name;
             console.log (player_name)
 
             if (player_name === '') {
@@ -21,6 +22,8 @@ export default function routes(color){
      }
      async function gamePlay(req, res) {
         try {
+
+            const playerName = req.session.playerName
             const easyQuestions = await color.easyQuestions();
     
             // Check if all questions have been used
@@ -43,7 +46,8 @@ export default function routes(color){
                 gameStart: true,
                 currentLevel: 'easy',
                 score: 10,
-                randomQuestion
+                randomQuestion,
+                playerName
             });
         } catch (error) {
             console.log(error);
