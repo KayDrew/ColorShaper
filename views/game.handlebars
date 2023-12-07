@@ -118,33 +118,54 @@
                         seconds--;
 
                         // Load a machine learning model using the Teachable Machine API
-                        let model = URL + "model.json";
+                        let modelU = URL + "model.json";
                         let metadata = URL + "metadata.json";
-                        model = await tmImage.load(model, metadata);
+                        model = await tmImage.load(modelU, metadata);
                     } else {
                         // Stop the timer when it reaches zero
                         clearInterval(interval);
 
-                        // Display a SweetAlert indicating that time is up
-                        swal({
-                            title: "Time's Up!",
-                            button: { text: "Try again", className: "btn" },
-                            className: "alert"
-                        }).then((value) => {
-                            // If the player clicks "Try again," generate a new question and play a sound
-                            if (value) {
-                                question = easyQuestions[Math.floor(Math.random() * easyQuestions.length)];
-                                questionText.innerText = question;
-                                playSound();
-                            }
-                        });
                     }
+
                 }
 
                 // Set up the timer to start after a delay of 5 seconds
                 setTimeout(() => {
                     interval = setInterval(updateCountdown, 1000);
                 }, 5000);
+
+
+                      function timeUp(){
+
+                            if(seconds==0){
+                             swal({
+                                   title: "Time's Up!",
+                                  button: { text: "Try again", className: "btn" },
+                                   className: "alert"
+                                   }).then((value)=>{
+
+                                    if(value){
+                                
+                         interval = setInterval(updateCountdown, 1000)
+                                    question = easyQuestions[Math.floor(Math.random() * easyQuestions.length)];
+                                    questionText.innerText=question;
+                                    seconds=10;
+                                    playSound();
+
+                                    
+
+                                   
+                                    }   
+                            
+                             } );
+
+                            }
+
+                       }
+                       
+            setInterval(timeUp, 1000)
+
+
 
                 // If "play" is set to "true," check if audio is playing and start playing if not
                 if (play == "true") {
