@@ -11,7 +11,7 @@
                 {{messages.error}}
             </span>
             {{/if}}
-            <div class="timerTitle"><h4>remaining time :<span class="countDown">00:10</span></h4></div>
+            <div class="timerTitle"><h4>remaining time :<span class="countDown">00:15</span></h4></div>
             {{!-- We should add handlebars here for a dynamic timer based on the settings if we got time--}}
             {{#if messages.success}}
             {{!-- message class is used by js to hide message after 3 seconds --}}
@@ -46,7 +46,7 @@ let play = localStorage.getItem("play");
     let audio = document.querySelector("#music");
     audio.volume = 0.2;
  
- function playGame() {
+ async function playGame() {
 
         swal({
             title: "Dive In!",
@@ -61,13 +61,8 @@ let play = localStorage.getItem("play");
                 }
 
                 if (value == true) {
-
-
                   
-        init();
-          
-
-                    
+                       init();  
                 
                         // Function for timer 
                         var seconds = 15;
@@ -78,7 +73,7 @@ let play = localStorage.getItem("play");
                             var remainingSeconds = seconds % 60;
 
                             // Basic syntanx for ternary operator (condition) ? valueIfTrue : valueIfFalse;
-                            document.querySelector('.countDown').innerHTML = (minutes < 10 ? '0' : '') + minutes + ':' + (remainingSeconds < 10 ? '0' : '') + remainingSeconds;
+                            document.querySelector('.countDown').innerHTML = (minutes < 10 ? '0' : '') + minutes + ':' + (remainingSeconds < 15 ? '0' : '') + remainingSeconds;
 
                             if (seconds > 0) {
                                 seconds--;
@@ -89,13 +84,20 @@ let play = localStorage.getItem("play");
 
                             } else {
                                 clearInterval(interval);
+
+                                   swal({
+                                   title: "Time's Up!",
+                                  button: { text: "Try again", className: "btn" },
+                                   className: "alert"
+                                   }).then();
                              
                                 model=null;
                                 document.querySelector('.countDown').innerHTML = 'Next Question';
                               
                             }
                         }
-
+           
+                      
 
                         setTimeout(() => {
       
