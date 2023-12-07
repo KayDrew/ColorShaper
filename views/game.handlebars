@@ -48,6 +48,8 @@
 
     let audio = document.querySelector("#music");
     audio.volume = 0.2;
+
+    let levels = '{{levels}}'.split(',');
  
  async function playGame() {
 
@@ -144,10 +146,16 @@
             
     }
         let score = 0 
+        let levelIndex = 0;
 
         const scoreElement = document.querySelector('#score');
 
         scoreElement.innerText = score
+
+        const levelElement = document.querySelector('#currentLevel');
+
+        levelElement.innerText = levels[levelIndex];
+
 
         const URL = "https://teachablemachine.withgoogle.com/models/0ipS3AKwb/";
 
@@ -203,6 +211,8 @@
         const yellowData = prediction[7]
         const hexagonData = prediction[8]
         const pentagonData = prediction[9]
+
+        
         
         if(circleData.probability > 0.95 && '{{randomQuestion.question}}' === 'Show an image of a Circle'){
             console.log('Looks like a circle')
@@ -291,6 +301,7 @@
             console.log('Looks like a rectangle')
             score++
             scoreElement.innerText = score
+            
 
                  swal({
                 title: "Correct!",
@@ -419,6 +430,15 @@
         console.log(prediction[i]);}
     }
 
+    function playerLevel(){
+        console.log('Player level function called!!')
+        console.log('{{levels}}')
+
+        let level = '';
+        let levels = '{{levels}}'.split(',');
+
+        
+    }
 
     
                     function playSound(){
