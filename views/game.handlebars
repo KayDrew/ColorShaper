@@ -221,6 +221,7 @@ let play = localStorage.getItem("play");
             console.log('Looks like a circle')
             score++
             scoreElement.innerText = score
+            session.score = score;
             //stop scannerr
              model=null;
 
