@@ -45,7 +45,8 @@ let play = localStorage.getItem("play");
 
     let audio = document.querySelector("#music");
     audio.volume = 0.2;
-    function playGame() {
+ 
+ function playGame() {
 
         swal({
             title: "Dive In!",
@@ -63,17 +64,16 @@ let play = localStorage.getItem("play");
 
 
                   
-    setTimeout(() => {
-        init()
-            }, 1000);
+        init();
+          
 
                     
                 
                         // Function for timer 
-                        var seconds = 10;
+                        var seconds = 15;
                         var interval;
 
-                        function updateCountdown() {
+                       async  function updateCountdown() {
                             var minutes = Math.floor(seconds / 60);
                             var remainingSeconds = seconds % 60;
 
@@ -82,9 +82,17 @@ let play = localStorage.getItem("play");
 
                             if (seconds > 0) {
                                 seconds--;
+                                
+                               let model = URL + "model.json";
+                               let metadata = URL + "metadata.json";
+                               model = await tmImage.load(model, metadata);
+
                             } else {
                                 clearInterval(interval);
+                             
+                                model=null;
                                 document.querySelector('.countDown').innerHTML = 'Next Question';
+                              
                             }
                         }
 
@@ -92,7 +100,7 @@ let play = localStorage.getItem("play");
                         setTimeout(() => {
       
                          interval = setInterval(updateCountdown, 1000)
-                          }, 3000);
+                          }, 5000);
 
 
 
@@ -162,10 +170,6 @@ let play = localStorage.getItem("play");
         const modelURL = URL + "model.json";
         const metadataURL = URL + "metadata.json";
 
-        // load the model and metadata
-        // Refer to tmImage.loadFromFiles() in the API to support files from a file picker
-        // or files from your local hard drive
-        // Note: the pose library adds "tmImage" object to your window (window.tmImage)
         model = await tmImage.load(modelURL, metadataURL);
         maxPredictions = model.getTotalClasses();
 
@@ -212,14 +216,17 @@ let play = localStorage.getItem("play");
         const yellowData = prediction[7]
         const hexagonData = prediction[8]
         const pentagonData = prediction[9]
-
-        if(circleData.probability > 0.95){
+        
+        if(circleData.probability > 0.95 && '{{randomQuestion.question}}' === 'Show an image of a Circle'){
             console.log('Looks like a circle')
             score++
             scoreElement.innerText = score
+            session.score = score;
+            //stop scannerr
+             model=null;
 
             // Check if the score is above 3
-            if (score > 3) {
+            if (score > 2 && score < 6) {
                 congratulatePlayer()
             }
         }
@@ -228,9 +235,11 @@ let play = localStorage.getItem("play");
             console.log('Looks like a square')
             score++
             scoreElement.innerText = score
+            //stop scannerr
+             model=null;
 
             // Check if the score is above 3
-            if (score > 3) {
+            if (score > 2 && score < 6) {
                 congratulatePlayer()
             }
         }
@@ -238,9 +247,11 @@ let play = localStorage.getItem("play");
             console.log('Looks like a triangle')
             score++
             scoreElement.innerText = score
+              //stop scannerr
+             model=null;
 
             // Check if the score is above 3
-            if (score > 3) {
+            if (score > 2 && score < 6) {
                 congratulatePlayer()
             }
         }
@@ -248,9 +259,11 @@ let play = localStorage.getItem("play");
             console.log('Looks like a rectangle')
             score++
             scoreElement.innerText = score
+              //stop scannerr
+             model=null;
 
             // Check if the score is above 3
-            if (score > 3) {
+            if (score > 2 && score < 6) {
                 congratulatePlayer()
             }
         }
@@ -258,9 +271,11 @@ let play = localStorage.getItem("play");
             console.log('Looks like an Oval')
             score++
             scoreElement.innerText = score
+              //stop scannerr
+             model=null;
 
             // Check if the score is above 3
-            if (score > 3) {
+            if (score > 2 && score < 6) {
                 congratulatePlayer()
             }
         }
@@ -268,9 +283,11 @@ let play = localStorage.getItem("play");
             console.log('Looks like the color Blue')
             score++
             scoreElement.innerText = score
+              //stop scannerr
+             model=null;
 
             // Check if the score is above 3
-            if (score > 3) {
+            if (score > 5 && score < 9) {
                 congratulatePlayer()
             }
         }
@@ -278,9 +295,11 @@ let play = localStorage.getItem("play");
             console.log('Looks like the color Red')
             score++
             scoreElement.innerText = score
+              //stop scannerr
+             model=null;
 
             // Check if the score is above 3
-            if (score > 3) {
+            if (score > 5 && score < 9) {
                 congratulatePlayer()
             }
         }
@@ -288,9 +307,11 @@ let play = localStorage.getItem("play");
             console.log('Looks like the color Yellow')
             score++
             scoreElement.innerText = score
+              //stop scannerr
+             model=null;
 
             // Check if the score is above 3
-            if (score > 3) {
+            if (score > 5 && score < 9) {
                 congratulatePlayer()
             }
         }
@@ -298,9 +319,11 @@ let play = localStorage.getItem("play");
             console.log('Looks like a Hexagon')
             score++
             scoreElement.innerText = score
+              //stop scannerr
+             model=null;
 
             // Check if the score is above 3
-            if (score > 3) {
+            if (score >= 9 ) {
                 congratulatePlayer()
             }
         }
@@ -308,9 +331,11 @@ let play = localStorage.getItem("play");
             console.log('Looks like a pentagon')
             score++
             scoreElement.innerText = score
+              //stop scannerr
+             model=null;
 
             // Check if the score is above 3
-            if (score > 3) {
+            if (score >= 9 ) {
                 congratulatePlayer()
             }
         }
