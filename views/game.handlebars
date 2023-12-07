@@ -89,9 +89,6 @@
 
                             } else {
                                 clearInterval(interval);
-                                
-
-
 
                                    swal({
                                    title: "Time's Up!",
@@ -109,9 +106,7 @@
                             
                              } );
                             
-                                //seconds=10;
-                              // document.querySelector('.countDown').innerHTML = (minutes < 10 ? '0' : '') + minutes + ':' + (remainingSeconds < 10 ? '0' : '') + remainingSeconds;
-
+                            
                               
                             }
                         }
@@ -139,37 +134,6 @@
 
                     }
 
-                    function playSound(){
-                    
-                    if(!sound){             
-                    sound="true";
-                    localStorage.setItem("sound",sound)
-                    }
-                    
-                    else{
-                    
-                    if(sound=="true"){
-
-                    if ('speechSynthesis' in window) {
-                        // Speech Synthesis supported 🎉
-
-                        var msg = new SpeechSynthesisUtterance();
-                        msg.text = question;
-                        msg.pitch = 1.6;
-                        msg.lang = "en"
-                 
-                        window.speechSynthesis.speak(msg);
-
-
-
-                    } else {
-                        // Speech Synthesis Not Supported 😣
-                        alert("Sorry, your browser doesn't support text to speech!");
-                    }
-                    }
-                    
-                    }
-                    }
 
                    
                 }
@@ -249,6 +213,21 @@
             score++
             scoreElement.innerText = score
             session.score = score;
+
+                swal({
+                title: "Correct!",
+                icon: "success",
+                button: { text: "Next", className: "btn" },
+                className: "alert"
+            }).then((value)=>{
+                   //show next question
+            question = easyQuestions[Math.floor(Math.random() * easyQuestions.length)];
+            questionText.innerText=question;
+            playSound();
+
+            });
+     
+
             //stop scannerr
              model=null;
 
@@ -261,7 +240,22 @@
         if(squareData.probability > 0.95){
             console.log('Looks like a square')
             score++
-            scoreElement.innerText = score
+            scoreElement.innerText = score;
+
+                  swal({
+                title: "Correct!",
+                icon: "success",
+                button: { text: "Next", className: "btn" },
+                className: "alert"
+            }).then((value)=>{
+                   //show next question
+            question = easyQuestions[Math.floor(Math.random() * easyQuestions.length)];
+            questionText.innerText=question;
+            playSound();
+
+            });
+     
+
             session.score = score;
 
             // Store the updated score in localStorage
@@ -279,14 +273,8 @@
             console.log('Looks like a triangle')
             score++
             scoreElement.innerText = score
-
-            session.score = score;
-
-            // Store the updated score in localStorage
-            localStorage.setItem("score", score);
-
-            //stop scannerr
-            model=null;
+              //stop scannerr
+             model=null;
 
             // Check if the score is above 3
             if (score > 2 && score < 6) {
@@ -297,13 +285,7 @@
             console.log('Looks like a rectangle')
             score++
             scoreElement.innerText = score
-
-            session.score = score;
-
-            // Store the updated score in localStorage
-            localStorage.setItem("score", score);
-
-            //stop scannerr
+              //stop scannerr
              model=null;
 
             // Check if the score is above 3
@@ -315,12 +297,6 @@
             console.log('Looks like an Oval')
             score++
             scoreElement.innerText = score
-
-            session.score = score;
-
-            // Store the updated score in localStorage
-            localStorage.setItem("score", score);
-
               //stop scannerr
              model=null;
 
@@ -436,5 +412,37 @@
 
         console.log(prediction[i]);}
     }
+
+
+    
+                    function playSound(){
+                    
+                    if(!sound){             
+                    sound="true";
+                    localStorage.setItem("sound",sound)
+                    }
+                    
+                    else{
+                    
+                    if(sound=="true"){
+
+                    if ('speechSynthesis' in window) {
+                        // Speech Synthesis supported 🎉
+
+                        var msg = new SpeechSynthesisUtterance();
+                        msg.text = question;
+                        msg.pitch = 1.6;
+                        msg.lang = "en"
+               
+                        window.speechSynthesis.speak(msg);
+
+                    } else {
+                        // Speech Synthesis Not Supported 😣
+                        alert("Sorry, your browser doesn't support text to speech!");
+                    }
+                    }
+                    
+                    }
+                    }
 
 </script>
