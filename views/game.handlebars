@@ -39,6 +39,7 @@
 </body>
 
 <script>
+    
 
     let play = localStorage.getItem("play");
     let sound= localStorage.getItem("sound");
@@ -103,6 +104,7 @@
                                     question = easyQuestions[Math.floor(Math.random() * easyQuestions.length)];
                                     questionText.innerText=question;
                                     playSound();
+                                   
                                     }   
                             
                              } );
@@ -179,12 +181,14 @@
             
             
     }
-        let score = 0 
 
-        const scoreElement = document.querySelector('#score');
+    // Load the score from localStorage or set it to 0 if not present
+    let score = localStorage.getItem("score") || 0;
 
-        scoreElement.innerText = score
-
+    // Update the score element
+    const scoreElement = document.querySelector('#score');
+    scoreElement.innerText = score;
+       
         const URL = "https://teachablemachine.withgoogle.com/models/0ipS3AKwb/";
 
            let model, webcam, labelContainer, maxPredictions;
@@ -258,6 +262,11 @@
             console.log('Looks like a square')
             score++
             scoreElement.innerText = score
+            session.score = score;
+
+            // Store the updated score in localStorage
+            localStorage.setItem("score", score);
+
             //stop scannerr
              model=null;
 
@@ -270,8 +279,14 @@
             console.log('Looks like a triangle')
             score++
             scoreElement.innerText = score
-              //stop scannerr
-             model=null;
+
+            session.score = score;
+
+            // Store the updated score in localStorage
+            localStorage.setItem("score", score);
+
+            //stop scannerr
+            model=null;
 
             // Check if the score is above 3
             if (score > 2 && score < 6) {
@@ -282,7 +297,13 @@
             console.log('Looks like a rectangle')
             score++
             scoreElement.innerText = score
-              //stop scannerr
+
+            session.score = score;
+
+            // Store the updated score in localStorage
+            localStorage.setItem("score", score);
+
+            //stop scannerr
              model=null;
 
             // Check if the score is above 3
@@ -294,6 +315,12 @@
             console.log('Looks like an Oval')
             score++
             scoreElement.innerText = score
+
+            session.score = score;
+
+            // Store the updated score in localStorage
+            localStorage.setItem("score", score);
+
               //stop scannerr
              model=null;
 
@@ -306,6 +333,12 @@
             console.log('Looks like the color Blue')
             score++
             scoreElement.innerText = score
+
+            session.score = score;
+
+            // Store the updated score in localStorage
+            localStorage.setItem("score", score);
+
               //stop scannerr
              model=null;
 
@@ -318,6 +351,12 @@
             console.log('Looks like the color Red')
             score++
             scoreElement.innerText = score
+
+            session.score = score;
+
+            // Store the updated score in localStorage
+            localStorage.setItem("score", score);
+
               //stop scannerr
              model=null;
 
@@ -330,6 +369,12 @@
             console.log('Looks like the color Yellow')
             score++
             scoreElement.innerText = score
+
+            session.score = score;
+
+            // Store the updated score in localStorage
+            localStorage.setItem("score", score);
+
               //stop scannerr
              model=null;
 
@@ -342,6 +387,12 @@
             console.log('Looks like a Hexagon')
             score++
             scoreElement.innerText = score
+
+            session.score = score;
+
+            // Store the updated score in localStorage
+            localStorage.setItem("score", score);
+
               //stop scannerr
              model=null;
 
@@ -354,6 +405,12 @@
             console.log('Looks like a pentagon')
             score++
             scoreElement.innerText = score
+
+            session.score = score;
+
+            // Store the updated score in localStorage
+            localStorage.setItem("score", score);
+
               //stop scannerr
              model=null;
 
