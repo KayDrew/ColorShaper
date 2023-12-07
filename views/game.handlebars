@@ -27,7 +27,6 @@
             <!-- The audio element allows users to play and control audio playback -->
             <audio controls loop id="music">
                 <!-- The source element specifies the audio file sources in different formats -->
-                <source src="music.ogg" type="audio/ogg"> <!-- Ogg Vorbis audio format -->
                 <source src="music.mp3" type="audio/mpeg"> <!-- MP3 audio format -->
                 <!-- This text will be displayed if the browser does not support the audio element -->
                 Your browser does not support the audio element.
@@ -117,10 +116,9 @@
                     if (seconds > 0) {
                         seconds--;
 
-                        // Load a machine learning model using the Teachable Machine API
-                        let modelU = URL + "model.json";
-                        let metadata = URL + "metadata.json";
-                        model = await tmImage.load(modelU, metadata);
+                        //start scanner
+                        startScanner();
+
                     } else {
                         // Stop the timer when it reaches zero
                         clearInterval(interval);
@@ -149,6 +147,8 @@
                          interval = setInterval(updateCountdown, 1000)
                                     question = easyQuestions[Math.floor(Math.random() * easyQuestions.length)];
                                     questionText.innerText=question;
+
+                                    //reset timer
                                     seconds=10;
                                     playSound();
 
@@ -163,7 +163,7 @@
 
                        }
                        
-            setInterval(timeUp, 1000)
+            setInterval(timeUp, 1400)
 
 
 
@@ -283,6 +283,10 @@
 
             // Store the updated score in localStorage
             localStorage.setItem("score", score);
+            
+
+            // Stop the scanner (assuming 'model' refers to the Teachable Machine model)
+            model = null;
 
             // Display a success message using SweetAlert and proceed to the next question
             swal({
@@ -295,10 +299,18 @@
                 question = easyQuestions[Math.floor(Math.random() * easyQuestions.length)];
                 questionText.innerText = question;
                 playSound();
-            });
 
-            // Stop the scanner (assuming 'model' refers to the Teachable Machine model)
-            model = null;
+                //stop the timer
+                 clearInterval(interval);    
+               //reset timer
+                 seconds=10;
+                 updateCountdown();
+
+                 
+                                  
+
+                
+            });
 
             // Check if the score is between 3 and 5
             //if (score > 2 && score < 6) {
@@ -390,5 +402,13 @@
                 }
             }
         }
+    }
+
+   async function startScanner(){
+        
+                        // Load a machine learning model using the Teachable Machine API
+                        let modelU = URL + "model.json";
+                        let metadata = URL + "metadata.json";
+                        model = await tmImage.load(modelU, metadata);
     }
 </script>
