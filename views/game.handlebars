@@ -47,9 +47,9 @@
     let question='{{randomQuestion.question}}';
     let questionText= document.querySelector("#question");
     
-    //set levels and score initial values into local storage
+    //set levels and level index initial values into local storage
     localStorage.setItem('player-level', 'easy');
-    localStorage.setItem('score', '0');
+    localStorage.setItem('level-index', '0');
 
     let audio = document.querySelector("#music");
     audio.volume = 0.2;
@@ -155,14 +155,17 @@
 
     // Load the score from localStorage or set it to 0 if not present
     let score = localStorage.getItem("score") || 0;
-        let levelIndex = 0;
+        let levelIndex = localStorage.getItem('level-index') || 0;
+        if(levelIndex > 2){
+            levelIndex = 0;
+        };
 
     // Update the score element
     const scoreElement = document.querySelector('#score');
     scoreElement.innerText = score;
 
     const levelElement = document.querySelector('#currentLevel');
-    levelElement.innerText = levels[levelIndex];
+    levelElement.innerText = localStorage.getItem('player-level') || levels[levelIndex];
        
         const URL = "https://teachablemachine.withgoogle.com/models/0ipS3AKwb/";
 
