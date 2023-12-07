@@ -212,7 +212,11 @@
             console.log('Looks like a circle')
             score++
             scoreElement.innerText = score
+
             session.score = score;
+
+            // Store the updated score in localStorage
+            localStorage.setItem("score", score);
 
                 swal({
                 title: "Correct!",
@@ -241,6 +245,11 @@
             console.log('Looks like a square')
             score++
             scoreElement.innerText = score;
+
+            session.score = score;
+
+            // Store the updated score in localStorage
+            localStorage.setItem("score", score);
 
                   swal({
                 title: "Correct!",
