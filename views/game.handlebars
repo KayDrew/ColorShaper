@@ -39,6 +39,10 @@
     // Retrieve the "play" and "sound" values from local storage
     let play = localStorage.getItem("play");
     let sound = localStorage.getItem("sound");
+    
+   // Set up a timer with a countdown of 10 seconds
+    let seconds = 10;
+    let interval;
 
     // Array of easy questions for the game
     const easyQuestions =   [
@@ -80,6 +84,7 @@
     // Asynchronous function to start the game
     async function playGame() {
 
+
         // Display a SweetAlert with a title and a "Yay!" button
         swal({
             title: "Dive In!",
@@ -101,31 +106,8 @@
                 // Play a sound
                 playSound();
 
-                // Set up a timer with a countdown of 10 seconds
-                var seconds = 10;
-                var interval;
 
-                // Function to update the countdown timer
-                async function updateCountdown() {
-                    var minutes = Math.floor(seconds / 60);
-                    var remainingSeconds = seconds % 60;
-
-                    // Update the timer display
-                    document.querySelector('.countDown').innerHTML = (minutes < 10 ? '0' : '') + minutes + ':' + (remainingSeconds < 10 ? '0' : '') + remainingSeconds;
-
-                    if (seconds > 0) {
-                        seconds--;
-
-                        //start scanner
-                        startScanner();
-
-                    } else {
-                        // Stop the timer when it reaches zero
-                        clearInterval(interval);
-
-                    }
-
-                }
+         
 
                 // Set up the timer to start after a delay of 5 seconds
                 setTimeout(() => {
@@ -136,6 +118,9 @@
                       function timeUp(){
 
                             if(seconds==0){
+
+                                model=null;
+
                              swal({
                                    title: "Time's Up!",
                                   button: { text: "Try again", className: "btn" },
@@ -143,8 +128,9 @@
                                    }).then((value)=>{
 
                                     if(value){
-                                
-                         interval = setInterval(updateCountdown, 1000)
+                                        startScanner();
+
+                                    interval = setInterval(updateCountdown, 1000)
                                     question = easyQuestions[Math.floor(Math.random() * easyQuestions.length)];
                                     questionText.innerText=question;
 
@@ -180,7 +166,7 @@
     }
 
     // Load the score from localStorage or set it to 0 if not present
-    let score = localStorage.getItem("score") || 0;
+    let score = localStorage.getItem("score") || 5;
     let levelIndex = localStorage.getItem('level-index') || 0;
 
     // Check if the levelIndex is greater than 2 and reset it to 0 if true
@@ -238,11 +224,15 @@
         }, 1000);
     }
 
-    // Query and store the DOM element with the class "results" in the variable 'brutText'
-    let brutText = document.querySelector(".results");
-
     // Asynchronous function to make predictions based on the webcam frame
     async function predict() {
+
+        
+                        // Load a machine learning model using the Teachable Machine API
+                        let modelU = URL + "model.json";
+                        let metadata = URL + "metadata.json";
+                        model = await tmImage.load(modelU, metadata);
+
         // Predictions based on the webcam frame
         const prediction = await model.predict(webcam.canvas);
 
@@ -287,6 +277,9 @@
 
             // Stop the scanner (assuming 'model' refers to the Teachable Machine model)
             model = null;
+            
+                //stop the timer
+                 clearInterval(interval);
 
             // Display a success message using SweetAlert and proceed to the next question
             swal({
@@ -295,13 +288,14 @@
                 button: { text: "Next", className: "btn" },
                 className: "alert"
             }).then(() => {
+
+                //start scanner
+                startScanner
                 // Show the next question
                 question = easyQuestions[Math.floor(Math.random() * easyQuestions.length)];
                 questionText.innerText = question;
                 playSound();
-
-                //stop the timer
-                 clearInterval(interval);    
+    
                //reset timer
                  seconds=10;
                  updateCountdown();
@@ -329,7 +323,8 @@
             // Easy level
             // give congrats
             congratulatePlayer();
-            // Increase level to medium
+            // Increase level to medium  
+                question = mediumQuestions[Math.floor(Math.random() * mediumQuestions.length)];
             // give new question based on medium level
         } 
 
@@ -338,14 +333,16 @@
             // give congrats
             congratulatePlayer();
             // Increase level to hard
+                question = hardQuestions[Math.floor(Math.random() * hardQuestions.length)];
             // give new question based on hard level
         }
         
-        if (score == 11) {
+        if (score == 11 ) {
             // Hard level
             // give congrats on completing the game
-            congratulatePlayer();
+            congratulatePlayer();  
         }
+        
     }
 		
 	// Function to congratulate the player
@@ -353,7 +350,7 @@
         // Display a SweetAlert with a congratulatory message
         swal({
             title: "Congratulations!",
-            text: "You're doing great! Keep it up!",
+            text: "You've reached a higher level!",
             icon: "success",
             button: { text: "Thanks!", className: "btn" },
             className: "alert"
@@ -405,10 +402,27 @@
     }
 
    async function startScanner(){
-        
-                        // Load a machine learning model using the Teachable Machine API
-                        let modelU = URL + "model.json";
-                        let metadata = URL + "metadata.json";
-                        model = await tmImage.load(modelU, metadata);
     }
+
+
+           // Function to update the countdown timer
+                async function updateCountdown() {
+                    var minutes = Math.floor(seconds / 60);
+                    var remainingSeconds = seconds % 60;
+
+                    // Update the timer display
+                    document.querySelector('.countDown').innerHTML = (minutes < 10 ? '0' : '') + minutes + ':' + (remainingSeconds < 10 ? '0' : '') + remainingSeconds;
+
+                    if (seconds > 0) {
+                        seconds--;
+
+
+                    } else {
+                        // Stop the timer when it reaches zero
+                        clearInterval(interval);
+                     
+
+                    }
+
+                }
 </script>
