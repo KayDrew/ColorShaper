@@ -39,6 +39,7 @@
 </body>
 
 <script>
+    
 
     let play = localStorage.getItem("play");
     let sound= localStorage.getItem("sound");
@@ -102,6 +103,7 @@
                                     question = easyQuestions[Math.floor(Math.random() * easyQuestions.length)];
                                     questionText.innerText=question;
                                     playSound();
+                                   
                                     }   
                             
                              } );
@@ -145,18 +147,15 @@
             
             
     }
-        let score = 0 
+
+    // Load the score from localStorage or set it to 0 if not present
+    let score = localStorage.getItem("score") || 0;
         let levelIndex = 0;
 
-        const scoreElement = document.querySelector('#score');
-
-        scoreElement.innerText = score
-
-        const levelElement = document.querySelector('#currentLevel');
-
-        levelElement.innerText = levels[levelIndex];
-
-
+    // Update the score element
+    const scoreElement = document.querySelector('#score');
+    scoreElement.innerText = score;
+       
         const URL = "https://teachablemachine.withgoogle.com/models/0ipS3AKwb/";
 
            let model, webcam, labelContainer, maxPredictions;
@@ -218,7 +217,11 @@
             console.log('Looks like a circle')
             score++
             scoreElement.innerText = score
+
             session.score = score;
+
+            // Store the updated score in localStorage
+            localStorage.setItem("score", score);
 
                 swal({
                 title: "Correct!",
@@ -248,6 +251,11 @@
             score++
             scoreElement.innerText = score;
 
+            session.score = score;
+
+            // Store the updated score in localStorage
+            localStorage.setItem("score", score);
+
                   swal({
                 title: "Correct!",
                 icon: "success",
@@ -261,6 +269,11 @@
 
             });
      
+
+            session.score = score;
+
+            // Store the updated score in localStorage
+            localStorage.setItem("score", score);
 
             //stop scannerr
              model=null;
@@ -274,21 +287,6 @@
             console.log('Looks like a triangle')
             score++
             scoreElement.innerText = score
-
-                  swal({
-                title: "Correct!",
-                icon: "success",
-                button: { text: "Next", className: "btn" },
-                className: "alert"
-            }).then((value)=>{
-                   //show next question
-            question = easyQuestions[Math.floor(Math.random() * easyQuestions.length)];
-            questionText.innerText=question;
-            playSound();
-
-            });
-     
-
               //stop scannerr
              model=null;
 
@@ -301,7 +299,6 @@
             console.log('Looks like a rectangle')
             score++
             scoreElement.innerText = score
-            
 
                  swal({
                 title: "Correct!",
@@ -329,21 +326,6 @@
             console.log('Looks like an Oval')
             score++
             scoreElement.innerText = score
-
-                   swal({
-                title: "Correct!",
-                icon: "success",
-                button: { text: "Next", className: "btn" },
-                className: "alert"
-            }).then((value)=>{
-                   //show next question
-            question = easyQuestions[Math.floor(Math.random() * easyQuestions.length)];
-            questionText.innerText=question;
-            playSound();
-
-            });
-     
-
               //stop scannerr
              model=null;
 
@@ -356,6 +338,12 @@
             console.log('Looks like the color Blue')
             score++
             scoreElement.innerText = score
+
+            session.score = score;
+
+            // Store the updated score in localStorage
+            localStorage.setItem("score", score);
+
               //stop scannerr
              model=null;
 
@@ -368,6 +356,12 @@
             console.log('Looks like the color Red')
             score++
             scoreElement.innerText = score
+
+            session.score = score;
+
+            // Store the updated score in localStorage
+            localStorage.setItem("score", score);
+
               //stop scannerr
              model=null;
 
@@ -380,6 +374,12 @@
             console.log('Looks like the color Yellow')
             score++
             scoreElement.innerText = score
+
+            session.score = score;
+
+            // Store the updated score in localStorage
+            localStorage.setItem("score", score);
+
               //stop scannerr
              model=null;
 
@@ -392,6 +392,12 @@
             console.log('Looks like a Hexagon')
             score++
             scoreElement.innerText = score
+
+            session.score = score;
+
+            // Store the updated score in localStorage
+            localStorage.setItem("score", score);
+
               //stop scannerr
              model=null;
 
@@ -404,6 +410,12 @@
             console.log('Looks like a pentagon')
             score++
             scoreElement.innerText = score
+
+            session.score = score;
+
+            // Store the updated score in localStorage
+            localStorage.setItem("score", score);
+
               //stop scannerr
              model=null;
 
