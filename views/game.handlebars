@@ -1,7 +1,7 @@
 <body onload="playGame()">
     <div class="container">
         <div class="questionSection">
-            <h2>{{randomQuestion.question}}</h2>
+            <h2 id="question">{{randomQuestion.question}}</h2>
         </div>
         <div class="timer">
             {{#if messages.error}}
@@ -11,7 +11,7 @@
                 {{messages.error}}
             </span>
             {{/if}}
-            <div class="timerTitle"><h4>remaining time :<span class="countDown">00:15</span></h4></div>
+            <div class="timerTitle"><h4>remaining time :<span class="countDown">00:10</span></h4></div>
             {{!-- We should add handlebars here for a dynamic timer based on the settings if we got time--}}
             {{#if messages.success}}
             {{!-- message class is used by js to hide message after 3 seconds --}}
@@ -39,9 +39,12 @@
 </body>
 
 <script>
-let play = localStorage.getItem("play");
-    let sound= localStorage.getItem("sound");
 
+    let play = localStorage.getItem("play");
+    let sound= localStorage.getItem("sound");
+    const easyQuestions=['Show an image of a Triangle','Show an image of a Circle','Show an image of a Square','Show an image of a Oval','Show an image of a Rectangle'];
+    let question='{{randomQuestion.question}}';
+    let questionText= document.querySelector("#question");
 
     let audio = document.querySelector("#music");
     audio.volume = 0.2;
@@ -62,10 +65,11 @@ let play = localStorage.getItem("play");
 
                 if (value == true) {
                   
-                       init();  
+                       init(); 
+                        playSound() 
                 
                         // Function for timer 
-                        var seconds = 15;
+                        var seconds = 10;
                         var interval;
 
                        async  function updateCountdown() {
@@ -73,7 +77,7 @@ let play = localStorage.getItem("play");
                             var remainingSeconds = seconds % 60;
 
                             // Basic syntanx for ternary operator (condition) ? valueIfTrue : valueIfFalse;
-                            document.querySelector('.countDown').innerHTML = (minutes < 10 ? '0' : '') + minutes + ':' + (remainingSeconds < 15 ? '0' : '') + remainingSeconds;
+                            document.querySelector('.countDown').innerHTML = (minutes < 10 ? '0' : '') + minutes + ':' + (remainingSeconds < 10 ? '0' : '') + remainingSeconds;
 
                             if (seconds > 0) {
                                 seconds--;
@@ -84,15 +88,28 @@ let play = localStorage.getItem("play");
 
                             } else {
                                 clearInterval(interval);
+                                
+
+
 
                                    swal({
                                    title: "Time's Up!",
                                   button: { text: "Try again", className: "btn" },
                                    className: "alert"
-                                   }).then();
-                             
-                                model=null;
-                                document.querySelector('.countDown').innerHTML = 'Next Question';
+                                   }).then((value)=>{
+
+                                    if(value){
+                                
+                                    question = easyQuestions[Math.floor(Math.random() * easyQuestions.length)];
+                                    questionText.innerText=question;
+                                    playSound();
+                                    }   
+                            
+                             } );
+                            
+                                //seconds=10;
+                              // document.querySelector('.countDown').innerHTML = (minutes < 10 ? '0' : '') + minutes + ':' + (remainingSeconds < 10 ? '0' : '') + remainingSeconds;
+
                               
                             }
                         }
@@ -116,11 +133,11 @@ let play = localStorage.getItem("play");
                             audio.play();
 
                         }
-                        else {
-                            console.log("not playing")
-                        }
+                       
 
                     }
+
+                    function playSound(){
                     
                     if(!sound){             
                     sound="true";
@@ -135,7 +152,7 @@ let play = localStorage.getItem("play");
                         // Speech Synthesis supported 🎉
 
                         var msg = new SpeechSynthesisUtterance();
-                        msg.text = "{{randomQuestion.question}}";
+                        msg.text = question;
                         msg.pitch = 1.6;
                         msg.lang = "en"
                  
@@ -150,7 +167,12 @@ let play = localStorage.getItem("play");
                     }
                     
                     }
+                    }
+
+                   
                 }
+
+
 
 
             });
@@ -208,7 +230,6 @@ let play = localStorage.getItem("play");
         const prediction = await model.predict(webcam.canvas);
 
          const circleData = prediction[0]
-        console.log(circleData)
         const squareData = prediction[1]
         const triangleData = prediction[2]
         const rectangleData = prediction[3]

@@ -26,6 +26,7 @@ export default function routes(color){
             const playerName = req.session.playerName
             const score = req.session.score || 0;
             const easyQuestions = await color.easyQuestions();
+           
     
             // Check if all questions have been used
             if (usedQuestions.length === easyQuestions.length) {
@@ -46,7 +47,7 @@ export default function routes(color){
             
             let levels = await color.gameLevels();
           
-            console.log(randomQuestion);
+           ;
             res.render('game', {
                 gameStart: true,
                 currentLevel: 'easy',
