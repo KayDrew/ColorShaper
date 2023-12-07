@@ -9,7 +9,7 @@ export default function routes(color){
             console.log (player_name)
 
             if (player_name === '') {
-                req.flash('error', 'Please enter a name');
+                req.flash('error', 'Please enter your name');
                 res.redirect('/');
             } else {
                 res.redirect('game',);

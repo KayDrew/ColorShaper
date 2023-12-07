@@ -74,6 +74,14 @@ input[type = text]{
 }
 
 /* ? Landing page specific styling */
+.instructions{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: left;
+}
+
 .playerForm{
   display:flex;
   flex-direction: column;
