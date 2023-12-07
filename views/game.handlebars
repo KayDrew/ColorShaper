@@ -1,5 +1,5 @@
 <body onload="playGame()">
-    <div class="container">
+    <div class="game-content">
         <div class="questionSection">
             <h2 id="question">{{randomQuestion.question}}</h2>
         </div>
@@ -21,473 +21,353 @@
             </span>
             {{/if}}
         </div>
-        <div  class="cameraViewBox">
         <div id="webcam-container"></div>
-</div>
-       
-
-
+        <!-- This div contains an audio element with controls, set to loop, and with an ID of "music" -->
         <div class="hidden" style="display:none">
+            <!-- The audio element allows users to play and control audio playback -->
             <audio controls loop id="music">
-                <source src="music.ogg" type="audio/ogg">
-                <source src="music.mp3" type="audio/mpeg">
+                <!-- The source element specifies the audio file sources in different formats -->
+                <source src="music.ogg" type="audio/ogg"> <!-- Ogg Vorbis audio format -->
+                <source src="music.mp3" type="audio/mpeg"> <!-- MP3 audio format -->
+                <!-- This text will be displayed if the browser does not support the audio element -->
                 Your browser does not support the audio element.
             </audio>
-
         </div>
     </div>
 </body>
 
 <script>
-    
-
+    // Retrieve the "play" and "sound" values from local storage
     let play = localStorage.getItem("play");
-    let sound= localStorage.getItem("sound");
-    const easyQuestions=['Show an image of a Triangle','Show an image of a Circle','Show an image of a Square','Show an image of a Oval','Show an image of a Rectangle'];
-    let question='{{randomQuestion.question}}';
-    let questionText= document.querySelector("#question");
-    
-    //set levels and level index initial values into local storage
+    let sound = localStorage.getItem("sound");
+
+    // Array of easy questions for the game
+    const easyQuestions =   [
+                                'Show an image of a Circle', 
+                                'Show an image of a Square', 
+                                'Show an image of a Triangle', 
+                                'Show an image of a Rectangle', 
+                                'Show an image of an Oval'
+                            ];
+    const mediumQuestions = [
+                                'Show something Blue', 
+                                'Show something Red', 
+                                'Show something Yellow'
+                            ];
+    const hardQuestions =   [
+                                'Show an image of a Purple Circle', 
+                                'Show an image of a Green Triangle', 
+                                'Show an image of an Orange Oval'
+                            ];
+    // Retrieve the question from the server (assuming it's using some templating engine like Handlebars)
+    let question = '{{randomQuestion.question}}';
+
+    // Select the HTML element with the ID "question" to display the question
+    let questionText = document.querySelector("#question");
+
+    // Set initial values for player level and level index in local storage
     localStorage.setItem('player-level', 'easy');
     localStorage.setItem('level-index', '0');
 
+    // Select the HTML audio element with the ID "music"
     let audio = document.querySelector("#music");
+
+    // Set the volume of the audio to 0.2 (20%)
     audio.volume = 0.2;
 
+    // Split the string '{{levels}}' into an array using ',' as the delimiter
     let levels = '{{levels}}'.split(',');
- 
- async function playGame() {
+    
+    // Asynchronous function to start the game
+    async function playGame() {
 
+        // Display a SweetAlert with a title and a "Yay!" button
         swal({
             title: "Dive In!",
             button: { text: "Yay!", className: "btn" },
             className: "alert"
-        })
-            .then((value) => {
+        }).then((value) => { // Handle the promise returned by SweetAlert
 
-                if (!play) {
-                    play = "true";
-                    localStorage.setItem("play",play);
-        
-                }
+            // If "play" is not set, set it to "true" in local storage
+            if (!play) {
+                play = "true";
+                localStorage.setItem("play", play);
+            }
 
-                if (value == true) {
-                  
-                       init(); 
-                        playSound() 
-                
-                        // Function for timer 
-                        var seconds = 10;
-                        var interval;
+            // If the player clicks "Yay!" in the SweetAlert
+            if (value == true) {
 
-                       async  function updateCountdown() {
-                            var minutes = Math.floor(seconds / 60);
-                            var remainingSeconds = seconds % 60;
+                // Initialize the game
+                init();
+                // Play a sound
+                playSound();
 
-                            // Basic syntanx for ternary operator (condition) ? valueIfTrue : valueIfFalse;
-                            document.querySelector('.countDown').innerHTML = (minutes < 10 ? '0' : '') + minutes + ':' + (remainingSeconds < 10 ? '0' : '') + remainingSeconds;
+                // Set up a timer with a countdown of 10 seconds
+                var seconds = 10;
+                var interval;
 
-                            if (seconds > 0) {
-                                seconds--;
-                                
-                               let model = URL + "model.json";
-                               let metadata = URL + "metadata.json";
-                               model = await tmImage.load(model, metadata);
+                // Function to update the countdown timer
+                async function updateCountdown() {
+                    var minutes = Math.floor(seconds / 60);
+                    var remainingSeconds = seconds % 60;
 
-                            } else {
-                                clearInterval(interval);
+                    // Update the timer display
+                    document.querySelector('.countDown').innerHTML = (minutes < 10 ? '0' : '') + minutes + ':' + (remainingSeconds < 10 ? '0' : '') + remainingSeconds;
 
-                                   swal({
-                                   title: "Time's Up!",
-                                  button: { text: "Try again", className: "btn" },
-                                   className: "alert"
-                                   }).then((value)=>{
+                    if (seconds > 0) {
+                        seconds--;
 
-                                    if(value){
-                                
-                                    question = easyQuestions[Math.floor(Math.random() * easyQuestions.length)];
-                                    questionText.innerText=question;
-                                    playSound();
-                                   
-                                    }   
-                            
-                             } );
-                            
-                            
-                              
+                        // Load a machine learning model using the Teachable Machine API
+                        let model = URL + "model.json";
+                        let metadata = URL + "metadata.json";
+                        model = await tmImage.load(model, metadata);
+                    } else {
+                        // Stop the timer when it reaches zero
+                        clearInterval(interval);
+
+                        // Display a SweetAlert indicating that time is up
+                        swal({
+                            title: "Time's Up!",
+                            button: { text: "Try again", className: "btn" },
+                            className: "alert"
+                        }).then((value) => {
+                            // If the player clicks "Try again," generate a new question and play a sound
+                            if (value) {
+                                question = easyQuestions[Math.floor(Math.random() * easyQuestions.length)];
+                                questionText.innerText = question;
+                                playSound();
                             }
-                        }
-           
-                      
-
-                        setTimeout(() => {
-      
-                         interval = setInterval(updateCountdown, 1000)
-                          }, 5000);
-
-
-
-                    if (play == "true") {
-
-                        var isPlaying = audio.currentTime > 0 && !audio.paused && !audio.ended
-                            && audio.readyState > audio.HAVE_CURRENT_DATA;
-                            
-                
-                        if (!isPlaying) {
-                            audio.play();
-
-                        }
-                       
-
+                        });
                     }
-
-
-                   
                 }
 
+                // Set up the timer to start after a delay of 5 seconds
+                setTimeout(() => {
+                    interval = setInterval(updateCountdown, 1000);
+                }, 5000);
 
+                // If "play" is set to "true," check if audio is playing and start playing if not
+                if (play == "true") {
+                    var isPlaying = audio.currentTime > 0 && !audio.paused && !audio.ended && audio.readyState > audio.HAVE_CURRENT_DATA;
 
-
-            });
-            
-            
+                    if (!isPlaying) {
+                        audio.play();
+                    }
+                }
+            }
+        });
     }
 
     // Load the score from localStorage or set it to 0 if not present
     let score = localStorage.getItem("score") || 0;
-        let levelIndex = localStorage.getItem('level-index') || 0;
-        if(levelIndex > 2){
-            levelIndex = 0;
-        };
+    let levelIndex = localStorage.getItem('level-index') || 0;
+
+    // Check if the levelIndex is greater than 2 and reset it to 0 if true
+    if (levelIndex > 2) {
+        levelIndex = 0;
+    }
 
     // Update the score element
     const scoreElement = document.querySelector('#score');
     scoreElement.innerText = score;
 
+    // Update the current level element
     const levelElement = document.querySelector('#currentLevel');
+    // Set the player level from localStorage or use the default level based on the levelIndex
     levelElement.innerText = localStorage.getItem('player-level') || levels[levelIndex];
-       
-        const URL = "https://teachablemachine.withgoogle.com/models/0ipS3AKwb/";
 
-           let model, webcam, labelContainer, maxPredictions;
+    // URL for the Teachable Machine model
+    const URL = "https://teachablemachine.withgoogle.com/models/0ipS3AKwb/";
 
-    // Load the image model and setup the webcam
+    // Variables for the Teachable Machine model, webcam, and predictions
+    let model, webcam, labelContainer, maxPredictions;
+
+    // Load the image model and set up the webcam
     async function init() {
+        // URLs for the model and metadata
         const modelURL = URL + "model.json";
         const metadataURL = URL + "metadata.json";
 
+        // Load the Teachable Machine image model
         model = await tmImage.load(modelURL, metadataURL);
         maxPredictions = model.getTotalClasses();
 
-        // Convenience function to setup a webcam
+        // Set up the webcam
         const flip = true; // whether to flip the webcam
         webcam = new tmImage.Webcam(200, 200, flip); // width, height, flip
         await webcam.setup(); // request access to the webcam
         await webcam.play();
         window.requestAnimationFrame(loop);
 
-        // append elements to the DOM
+        // Append the webcam canvas to the DOM
         document.getElementById("webcam-container").appendChild(webcam.canvas);
-      
+    }
     
-       }
-
+    // Asynchronous function to continuously loop through webcam updates and predictions
+    async function loop() {
+        // Update the webcam frame
+        webcam.update();
         
-        async function loop() {
-            webcam.update(); // update the webcam frame
-            await predict();
+        // Asynchronously predict based on the webcam frame
+        await predict();
 
-            setTimeout(() => {
-                window.requestAnimationFrame(loop);
-            }, 1000);
+        // Set a timeout to request the next animation frame after 1000 milliseconds (1 second)
+        setTimeout(() => {
+            window.requestAnimationFrame(loop);
+        }, 1000);
+    }
 
-        }
-        let brutText=document.querySelector(".results");
+    // Query and store the DOM element with the class "results" in the variable 'brutText'
+    let brutText = document.querySelector(".results");
 
-        // run the webcam image through the image model
-        async function predict() {
-
-
-        // predict can take in an image, video or canvas html element
+    // Asynchronous function to make predictions based on the webcam frame
+    async function predict() {
+        // Predictions based on the webcam frame
         const prediction = await model.predict(webcam.canvas);
 
-         const circleData = prediction[0]
-        const squareData = prediction[1]
-        const triangleData = prediction[2]
-        const rectangleData = prediction[3]
-        const ovalData = prediction[4]
-        const blueData = prediction[5]
-        const redData = prediction[6]
-        const yellowData = prediction[7]
-        const hexagonData = prediction[8]
-        const pentagonData = prediction[9]
-
-        console.log('Yellow Data: ', yellowData);
+        // Extract probability data for different shapes and colors
+        const circleData = prediction[0];
+        const squareData = prediction[1];
+        const triangleData = prediction[2];
+        const rectangleData = prediction[3];
+        const ovalData = prediction[4];
+        const blueData = prediction[5];
+        const redData = prediction[6];
+        const yellowData = prediction[7];
+        const purpleCircleData = prediction[8];
+        const greenTriangleData = prediction[9];
+        const orangeOvalData = prediction[10];
         
-        if(circleData.probability > 0.95 && '{{randomQuestion.question}}' === 'Show an image of a Circle'){
-            console.log('Looks like a circle')
-            score++
-            scoreElement.innerText = score
+        handlePrediction(circleData.probability, easyQuestions[0], 'circle');
+        handlePrediction(squareData.probability, easyQuestions[1], 'square');
+        handlePrediction(triangleData.probability, easyQuestions[2], 'triangle');
+        handlePrediction(rectangleData.probability, easyQuestions[3], 'rectangle');
+        handlePrediction(ovalData.probability, easyQuestions[4], 'oval');
+        handlePrediction(blueData.probability, mediumQuestions[0], 'blue');
+        handlePrediction(redData.probability, mediumQuestions[1], 'red');
+        handlePrediction(yellowData.probability, mediumQuestions[2], 'yellow');
+        handlePrediction(purpleCircleData.probability, hardQuestions[0], 'purple circle');
+        handlePrediction(greenTriangleData.probability, hardQuestions[1], 'green triangle');
+        handlePrediction(orangeOvalData.probability, hardQuestions[2], 'orange oval');
+    }
 
-            session.score = score;
+    function handlePrediction(probability, expectedQuestion, shapeType) {
+        // Check if the predicted shape has high probability and matches the expected question
+        if (probability > 0.95 && '{{randomQuestion.question}}' === expectedQuestion) {
+            console.log(`Shape and/or Color: ${shapeType}`);
 
-            // Store the updated score in localStorage
-            localStorage.setItem("score", score);
-
-                swal({
-                title: "Correct!",
-                icon: "success",
-                button: { text: "Next", className: "btn" },
-                className: "alert"
-            }).then((value)=>{
-                   //show next question
-            question = easyQuestions[Math.floor(Math.random() * easyQuestions.length)];
-            questionText.innerText=question;
-            playSound();
-
-            });
-     
-
-            //stop scannerr
-             model=null;
-
-            // Check if the score is above 3
-            if (score > 2 && score < 6) {
-                congratulatePlayer()
-            }
-        }
-
-        if(squareData.probability > 0.95){
-            console.log('Looks like a square')
-            score++
+            // Increment the score and update the score element
+            score++;
             scoreElement.innerText = score;
 
-            session.score = score;
-
             // Store the updated score in localStorage
             localStorage.setItem("score", score);
 
-                  swal({
+            // Display a success message using SweetAlert and proceed to the next question
+            swal({
                 title: "Correct!",
                 icon: "success",
                 button: { text: "Next", className: "btn" },
                 className: "alert"
-            }).then((value)=>{
-                   //show next question
-            question = easyQuestions[Math.floor(Math.random() * easyQuestions.length)];
-            questionText.innerText=question;
-            playSound();
-
+            }).then(() => {
+                // Show the next question
+                question = easyQuestions[Math.floor(Math.random() * easyQuestions.length)];
+                questionText.innerText = question;
+                playSound();
             });
-     
 
-            session.score = score;
+            // Stop the scanner (assuming 'model' refers to the Teachable Machine model)
+            model = null;
 
-            // Store the updated score in localStorage
-            localStorage.setItem("score", score);
+            // Check if the score is between 3 and 5
+            //if (score > 2 && score < 6) {
+            //    congratulatePlayer();
+            //}
 
-            //stop scannerr
-             model=null;
-
-            // Check if the score is above 3
-            if (score > 2 && score < 6) {
-                congratulatePlayer()
-            }
+            // Level Up
+            levelUp(score);
         }
-        if(triangleData.probability > 0.95){
-            console.log('Looks like a triangle')
-            score++
-            scoreElement.innerText = score
-              //stop scannerr
-             model=null;
+    }
+    
+    function levelUp(score) {
+        // Check score range and congratulate accordingly
 
-            // Check if the score is above 3
-            if (score > 2 && score < 6) {
-                congratulatePlayer()
-            }
+        if (score == 5) {
+            // Easy level
+            // give congrats
+            congratulatePlayer();
+            // Increase level to medium
+            // give new question based on medium level
+        } 
+
+        if (score == 8) {
+            // Medium level
+            // give congrats
+            congratulatePlayer();
+            // Increase level to hard
+            // give new question based on hard level
         }
-        if(rectangleData.probability > 0.95){
-            console.log('Looks like a rectangle')
-            score++
-            scoreElement.innerText = score
-
-                 swal({
-                title: "Correct!",
-                icon: "success",
-                button: { text: "Next", className: "btn" },
-                className: "alert"
-            }).then((value)=>{
-                   //show next question
-            question = easyQuestions[Math.floor(Math.random() * easyQuestions.length)];
-            questionText.innerText=question;
-            playSound();
-
-            });
-     ;
-
-              //stop scannerr
-             model=null;
-
-            // Check if the score is above 3
-            if (score > 2 && score < 6) {
-                congratulatePlayer()
-            }
+        
+        if (score == 11) {
+            // Hard level
+            // give congrats on completing the game
+            congratulatePlayer();
         }
-        if(ovalData.probability > 0.95){
-            console.log('Looks like an Oval')
-            score++
-            scoreElement.innerText = score
-              //stop scannerr
-             model=null;
-
-            // Check if the score is above 3
-            if (score > 2 && score < 6) {
-                congratulatePlayer()
-            }
-        }
-        if(blueData.probability > 0.95){
-            console.log('Looks like the color Blue')
-            score++
-            scoreElement.innerText = score
-
-            session.score = score;
-
-            // Store the updated score in localStorage
-            localStorage.setItem("score", score);
-
-              //stop scannerr
-             model=null;
-
-            // Check if the score is above 3
-            if (score > 5 && score < 9) {
-                congratulatePlayer()
-            }
-        }
-        if(redData.probability > 0.95){
-            console.log('Looks like the color Red')
-            score++
-            scoreElement.innerText = score
-
-            session.score = score;
-
-            // Store the updated score in localStorage
-            localStorage.setItem("score", score);
-
-              //stop scannerr
-             model=null;
-
-            // Check if the score is above 3
-            if (score > 5 && score < 9) {
-                congratulatePlayer()
-            }
-        }
-        if(yellowData.probability > 0.95){
-            console.log('Looks like the color Yellow')
-            score++
-            scoreElement.innerText = score
-
-            session.score = score;
-
-            // Store the updated score in localStorage
-            localStorage.setItem("score", score);
-
-              //stop scannerr
-             model=null;
-
-            // Check if the score is above 3
-            if (score > 5 && score < 9) {
-                congratulatePlayer()
-            }
-        }
-        if(hexagonData.probability > 0.95){
-            console.log('Looks like a Hexagon')
-            score++
-            scoreElement.innerText = score
-
-            session.score = score;
-
-            // Store the updated score in localStorage
-            localStorage.setItem("score", score);
-
-              //stop scannerr
-             model=null;
-
-            // Check if the score is above 3
-            if (score >= 9 ) {
-                congratulatePlayer()
-            }
-        }
-        if(pentagonData.probability > 0.95){
-            console.log('Looks like a pentagon')
-            score++
-            scoreElement.innerText = score
-
-            session.score = score;
-
-            // Store the updated score in localStorage
-            localStorage.setItem("score", score);
-
-              //stop scannerr
-             model=null;
-
-            // Check if the score is above 3
-            if (score >= 9 ) {
-                congratulatePlayer()
-            }
-        }
-
-        }
+    }
 		
 	// Function to congratulate the player
-        function congratulatePlayer() {
-            swal({
-                title: "Congratulations!",
-                text: "You're doing great! Keep it up!",
-                icon: "success",
-                button: { text: "Thanks!", className: "btn" },
-                className: "alert"
-            });
+    function congratulatePlayer() {
+        // Display a SweetAlert with a congratulatory message
+        swal({
+            title: "Congratulations!",
+            text: "You're doing great! Keep it up!",
+            icon: "success",
+            button: { text: "Thanks!", className: "btn" },
+            className: "alert"
+        });
 
-        for(let i=0;i<prediction.length;++i){
-
-        console.log(prediction[i]);}
+        // Log each element in the 'prediction' array to the console
+        for (let i = 0; i < prediction.length; ++i) {
+            console.log(prediction[i]);
+        }
     }
 
     function playerLevel(){
-        //use global levels array and levelIndex
-
-        
+        //use global levels array and levelIndex    
     }
 
-    
-                    function playSound(){
-                    
-                    if(!sound){             
-                    sound="true";
-                    localStorage.setItem("sound",sound)
-                    }
-                    
-                    else{
-                    
-                    if(sound=="true"){
+    // Function to play a sound (text-to-speech) for the current question
+    function playSound() {
+        // Check if the 'sound' variable is not set (undefined or null)
+        if (!sound) {
+            // If not set, initialize 'sound' to "true" and store it in localStorage
+            sound = "true";
+            localStorage.setItem("sound", sound);
+        } else {
+            // Check if 'sound' is set to "true"
+            if (sound === "true") {
+                // Check if Speech Synthesis is supported in the browser
+                if ('speechSynthesis' in window) {
+                    // Speech Synthesis supported 🎉
 
-                    if ('speechSynthesis' in window) {
-                        // Speech Synthesis supported 🎉
+                    // Create a SpeechSynthesisUtterance object
+                    var msg = new SpeechSynthesisUtterance();
+                    // Set the text to be spoken to the current question
+                    msg.text = question;
+                    // Set the pitch of the voice
+                    msg.pitch = 1.6;
+                    // Set the language for speech synthesis
+                    msg.lang = "en";
 
-                        var msg = new SpeechSynthesisUtterance();
-                        msg.text = question;
-                        msg.pitch = 1.6;
-                        msg.lang = "en"
-               
-                        window.speechSynthesis.speak(msg);
+                    // Use the SpeechSynthesis API to speak the text
+                    window.speechSynthesis.speak(msg);
 
-                    } else {
-                        // Speech Synthesis Not Supported 😣
-                        alert("Sorry, your browser doesn't support text to speech!");
-                    }
-                    }
-                    
-                    }
-                    }
-
+                } else {
+                    // Speech Synthesis Not Supported 😣
+                    // Display an alert if text-to-speech is not supported in the browser
+                    alert("Sorry, your browser doesn't support text-to-speech!");
+                }
+            }
+        }
+    }
 </script>
