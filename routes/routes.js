@@ -24,7 +24,7 @@ export default function routes(color){
         try {
 
             const playerName = req.session.playerName
-            const score = req.session.score || 0;
+            const score = localStorage.score || 0;
             const easyQuestions = await color.easyQuestions();
            
     
