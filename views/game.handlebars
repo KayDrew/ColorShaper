@@ -218,16 +218,17 @@ let play = localStorage.getItem("play");
         const yellowData = prediction[7]
         const hexagonData = prediction[8]
         const pentagonData = prediction[9]
-
-        if(circleData.probability > 0.95){
+        
+        if(circleData.probability > 0.95 && '{{randomQuestion.question}}' === 'Show an image of a Circle'){
             console.log('Looks like a circle')
             score++
             scoreElement.innerText = score
+            session.score = score;
             //stop scannerr
              model=null;
 
             // Check if the score is above 3
-            if (score > 3) {
+            if (score > 2 && score < 6) {
                 congratulatePlayer()
             }
         }
@@ -240,7 +241,7 @@ let play = localStorage.getItem("play");
              model=null;
 
             // Check if the score is above 3
-            if (score > 3) {
+            if (score > 2 && score < 6) {
                 congratulatePlayer()
             }
         }
@@ -252,7 +253,7 @@ let play = localStorage.getItem("play");
              model=null;
 
             // Check if the score is above 3
-            if (score > 3) {
+            if (score > 2 && score < 6) {
                 congratulatePlayer()
             }
         }
@@ -264,7 +265,7 @@ let play = localStorage.getItem("play");
              model=null;
 
             // Check if the score is above 3
-            if (score > 3) {
+            if (score > 2 && score < 6) {
                 congratulatePlayer()
             }
         }
@@ -276,7 +277,7 @@ let play = localStorage.getItem("play");
              model=null;
 
             // Check if the score is above 3
-            if (score > 3) {
+            if (score > 2 && score < 6) {
                 congratulatePlayer()
             }
         }
@@ -288,7 +289,7 @@ let play = localStorage.getItem("play");
              model=null;
 
             // Check if the score is above 3
-            if (score > 3) {
+            if (score > 5 && score < 9) {
                 congratulatePlayer()
             }
         }
@@ -300,7 +301,7 @@ let play = localStorage.getItem("play");
              model=null;
 
             // Check if the score is above 3
-            if (score > 3) {
+            if (score > 5 && score < 9) {
                 congratulatePlayer()
             }
         }
@@ -312,7 +313,7 @@ let play = localStorage.getItem("play");
              model=null;
 
             // Check if the score is above 3
-            if (score > 3) {
+            if (score > 5 && score < 9) {
                 congratulatePlayer()
             }
         }
@@ -324,7 +325,7 @@ let play = localStorage.getItem("play");
              model=null;
 
             // Check if the score is above 3
-            if (score > 3) {
+            if (score >= 9 ) {
                 congratulatePlayer()
             }
         }
@@ -336,7 +337,7 @@ let play = localStorage.getItem("play");
              model=null;
 
             // Check if the score is above 3
-            if (score > 3) {
+            if (score >= 9 ) {
                 congratulatePlayer()
             }
         }
