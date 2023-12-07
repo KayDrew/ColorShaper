@@ -1,3 +1,5 @@
+
+
 // Automatically remove flash messages after 3 seconds
 setTimeout(() => {
   const flashMessages = document.querySelectorAll(".message");

@@ -147,7 +147,11 @@ let play = localStorage.getItem("play");
             
             
     }
+        let score = 0 
 
+        const scoreElement = document.querySelector('#score');
+
+        scoreElement.innerText = score
 
         const URL = "https://teachablemachine.withgoogle.com/models/0ipS3AKwb/";
 
@@ -190,24 +194,142 @@ let play = localStorage.getItem("play");
         }
         let brutText=document.querySelector(".results");
 
-    // run the webcam image through the image model
-    async function predict() {
+        // run the webcam image through the image model
+        async function predict() {
 
 
         // predict can take in an image, video or canvas html element
         const prediction = await model.predict(webcam.canvas);
 
+         const circleData = prediction[0]
+        console.log(circleData)
+        const squareData = prediction[1]
+        const triangleData = prediction[2]
+        const rectangleData = prediction[3]
+        const ovalData = prediction[4]
+        const blueData = prediction[5]
+        const redData = prediction[6]
+        const yellowData = prediction[7]
+        const hexagonData = prediction[8]
+        const pentagonData = prediction[9]
 
-      for(let i=0;i<prediction.length;++i){
+        if(circleData.probability > 0.70){
+            console.log('Looks like a circle')
+            score++
+            scoreElement.innerText = score
 
- console.log(prediction[i]);}
+            // Check if the score is above 3
+            if (score > 3) {
+                congratulatePlayer()
+            }
+        }
+
+        if(squareData.probability > 0.70){
+            console.log('Looks like a square')
+            score++
+            scoreElement.innerText = score
+
+            // Check if the score is above 3
+            if (score > 3) {
+                congratulatePlayer()
+            }
+        }
+        if(triangleData.probability > 0.70){
+            console.log('Looks like a triangle')
+            score++
+            scoreElement.innerText = score
+
+            // Check if the score is above 3
+            if (score > 3) {
+                congratulatePlayer()
+            }
+        }
+        if(rectangleData.probability > 0.70){
+            console.log('Looks like a rectangle')
+            score++
+            scoreElement.innerText = score
+
+            // Check if the score is above 3
+            if (score > 3) {
+                congratulatePlayer()
+            }
+        }
+        if(rovalData.probability > 0.70){
+            console.log('Looks like an Oval')
+            score++
+            scoreElement.innerText = score
+
+            // Check if the score is above 3
+            if (score > 3) {
+                congratulatePlayer()
+            }
+        }
+        if(blueData.probability > 0.70){
+            console.log('Looks like the color Blue')
+            score++
+            scoreElement.innerText = score
+
+            // Check if the score is above 3
+            if (score > 3) {
+                congratulatePlayer()
+            }
+        }
+        if(redData.probability > 0.70){
+            console.log('Looks like the color Red')
+            score++
+            scoreElement.innerText = score
+
+            // Check if the score is above 3
+            if (score > 3) {
+                congratulatePlayer()
+            }
+        }
+        if(yellowData.probability > 0.70){
+            console.log('Looks like the color Yellow')
+            score++
+            scoreElement.innerText = score
+
+            // Check if the score is above 3
+            if (score > 3) {
+                congratulatePlayer()
+            }
+        }
+        if(hexagonData.probability > 0.70){
+            console.log('Looks like a Hexagon')
+            score++
+            scoreElement.innerText = score
+
+            // Check if the score is above 3
+            if (score > 3) {
+                congratulatePlayer()
+            }
+        }
+        if(pentagonData.probability > 0.70){
+            console.log('Looks like a pentagon')
+            score++
+            scoreElement.innerText = score
+
+            // Check if the score is above 3
+            if (score > 3) {
+                congratulatePlayer()
+            }
+        }
+
+        }
+		
+	// Function to congratulate the player
+        function congratulatePlayer() {
+            swal({
+                title: "Congratulations!",
+                text: "You're doing great! Keep it up!",
+                icon: "success",
+                button: { text: "Thanks!", className: "btn" },
+                className: "alert"
+            });
+
+        for(let i=0;i<prediction.length;++i){
+
+        console.log(prediction[i]);}
     }
-
-
-   
-
-
-  
-</script>
 
 </script>

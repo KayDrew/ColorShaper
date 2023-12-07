@@ -1,5 +1,7 @@
 export default function routes(color){
 
+    const usedQuestions = [];
+
     async function home (req,res){
         try {
 
@@ -17,25 +19,36 @@ export default function routes(color){
              console.log(error)
         }
      }
-
-    async function gamePlay (req,res){
+     async function gamePlay(req, res) {
         try {
-             const easyQuestions = await color.easyQuestions()
-             const randomQuestion = easyQuestions[Math.floor(Math.random() * easyQuestions.length - 1)];
-             console.log(randomQuestion)
-             res.render('game',{
+            const easyQuestions = await color.easyQuestions();
+    
+            // Check if all questions have been used
+            if (usedQuestions.length === easyQuestions.length) {
+                // If all questions have been used, reset the usedQuestions array
+                usedQuestions.length = 0;
+            }
+    
+            // Get a random question that hasn't been used
+            let randomQuestion;
+            do {
+                randomQuestion = easyQuestions[Math.floor(Math.random() * easyQuestions.length)];
+            } while (usedQuestions.includes(randomQuestion));
+    
+            // Mark the question as used
+            usedQuestions.push(randomQuestion);
+    
+            console.log(randomQuestion);
+            res.render('game', {
                 gameStart: true,
-                currentLevel: 'easy',   // Devan Commented: this needs to return from the all questions I guess
-                score: 10,              // Devan Commented: this will have to be returned from the user profile
+                currentLevel: 'easy',
+                score: 10,
                 randomQuestion
-            })
-
+            });
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
-        
     }
-
     async function settings(req,res){
 
     
