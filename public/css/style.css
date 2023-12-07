@@ -152,14 +152,19 @@ input[type = text]{
     margin:5vh auto;
     width: 50%;
   }
-
-  .cameraViewBox {
+  
+  #webcam-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  canvas{
     border: 1px solid black;
     border-radius: 10px;
     margin:5vh auto;
-    height: 30vh;    
-    width: 50%;
+    width: 25%;
   }
+
   .alert{   background-color: #cd717c;
     color: aliceblue;
   }
