@@ -24,7 +24,7 @@ export default function routes(color){
         try {
 
             const playerName = req.session.playerName
-            const score = localStorage.score || 0;
+            
             const easyQuestions = await color.easyQuestions();
            
     
@@ -51,7 +51,7 @@ export default function routes(color){
             res.render('game', {
                 gameStart: true,
                 currentLevel: 'easy',
-                score: score,
+                score: 10,
                 randomQuestion,
                 playerName,
                 levels
