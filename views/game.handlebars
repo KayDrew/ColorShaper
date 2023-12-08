@@ -327,6 +327,7 @@
             congratulatePlayer();
             // Increase level to medium  
             localStorage.setItem('player-level','Medium');
+            levelElement.innerText = localStorage.getItem('player-level');
             question = randomQuestion();
                 //question = mediumQuestions[Math.floor(Math.random() * mediumQuestions.length)];
             // give new question based on medium level
@@ -338,6 +339,7 @@
             congratulatePlayer();
             // Increase level to hard
             localStorage.setItem('player-level','Hard');
+            levelElement.innerText = localStorage.getItem('player-level');
             question = randomQuestion();
                 //question = hardQuestions[Math.floor(Math.random() * hardQuestions.length)];
             // give new question based on hard level
@@ -375,9 +377,9 @@
         });
 
         // Log each element in the 'prediction' array to the console
-        for (let i = 0; i < prediction.length; ++i) {
+        /*for (let i = 0; i < prediction.length; ++i) {
             console.log(prediction[i]);
-        }
+        }*/
     }
 
     function playerLevel(){
