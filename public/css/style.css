@@ -286,3 +286,8 @@ input[type = text]{
     background-color: rgb(113, 113, 231);
   
   }
+
+  #question{
+    animation-delay: 2.5s;
+    animation-duration: 2s;
+  }
