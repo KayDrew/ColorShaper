@@ -1,4 +1,4 @@
-#Shape and Color Game
+# ColorSHaper
 
 
 Welcome to the Shape and Color Game! This interactive web application allows you to showcase your magical camera skills by identifying shapes and colors. Here's a quick guide to get you started:
