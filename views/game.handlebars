@@ -195,6 +195,9 @@
         // Load the Teachable Machine image model
         model = await tmImage.load(modelURL, metadataURL);
         maxPredictions = model.getTotalClasses();
+        
+        // Add the first question
+        refreshQuestion();
 
         // Set up the webcam
         const flip = true; // whether to flip the webcam
@@ -261,7 +264,7 @@
 
     function handlePrediction(probability, expectedQuestion, shapeType) {
         //'{{randomQuestion.question}}'
-        console.log(probability,question,expectedQuestion,shapeType);
+        //console.log(probability,question,expectedQuestion,shapeType);
         // Check if the predicted shape has high probability and matches the expected question
         if (probability > 0.95 && question === expectedQuestion) {
             console.log(`Shape and/or Color: ${shapeType}`);
@@ -351,7 +354,7 @@
     }
 
     function randomQuestion(){
-        console.log('Player level: '+localStorage.getItem('player-level'));
+        //console.log('Player level: '+localStorage.getItem('player-level'));
         if(localStorage.getItem('player-level') === "Medium"){
             return mediumQuestions[Math.floor(Math.random() * mediumQuestions.length)]
         }
