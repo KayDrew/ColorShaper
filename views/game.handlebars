@@ -292,7 +292,7 @@
             }).then(() => {
 
                 //start scanner
-                startScanner
+                startScanner();
                 // Show the next question
                 question = randomQuestion();//easyQuestions[Math.floor(Math.random() * easyQuestions.length)];
                 questionText.innerText = question;
@@ -300,9 +300,7 @@
     
                //reset timer
                  seconds=10;
-                 updateCountdown();
-
-                 
+                 interval = setInterval(updateCountdown, 1000);   
                                   
 
                 
