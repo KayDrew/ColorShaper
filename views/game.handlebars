@@ -263,8 +263,10 @@
     }
 
     function handlePrediction(probability, expectedQuestion, shapeType) {
+        //'{{randomQuestion.question}}'
+        //console.log(probability,question,expectedQuestion,shapeType);
         // Check if the predicted shape has high probability and matches the expected question
-        if (probability > 0.95 && '{{randomQuestion.question}}' === expectedQuestion) {
+        if (probability > 0.95 && question === expectedQuestion) {
             console.log(`Shape and/or Color: ${shapeType}`);
 
             // Increment the score and update the score element
