@@ -131,7 +131,7 @@
                                         startScanner();
 
                                     interval = setInterval(updateCountdown, 1000)
-                                    question = easyQuestions[Math.floor(Math.random() * easyQuestions.length)];
+                                    question = randomQuestion();//easyQuestions[Math.floor(Math.random() * easyQuestions.length)];
                                     questionText.innerText=question;
 
                                     //reset timer
@@ -294,7 +294,7 @@
                 //start scanner
                 startScanner
                 // Show the next question
-                question = easyQuestions[Math.floor(Math.random() * easyQuestions.length)];
+                question = randomQuestion();//easyQuestions[Math.floor(Math.random() * easyQuestions.length)];
                 questionText.innerText = question;
                 playSound();
     
@@ -326,7 +326,9 @@
             // give congrats
             congratulatePlayer();
             // Increase level to medium  
-                question = mediumQuestions[Math.floor(Math.random() * mediumQuestions.length)];
+            localStorage.setItem('player-level','Medium');
+            question = randomQuestion();
+                //question = mediumQuestions[Math.floor(Math.random() * mediumQuestions.length)];
             // give new question based on medium level
         } 
 
@@ -335,7 +337,9 @@
             // give congrats
             congratulatePlayer();
             // Increase level to hard
-                question = hardQuestions[Math.floor(Math.random() * hardQuestions.length)];
+            localStorage.setItem('player-level','Hard');
+            question = randomQuestion();
+                //question = hardQuestions[Math.floor(Math.random() * hardQuestions.length)];
             // give new question based on hard level
         }
         
@@ -346,7 +350,19 @@
         }
         
     }
-		
+	
+    function randomQuestion(){
+        if(localStorage.getItem('player-level') === "Medium"){
+            return mediumQuestions[Math.floor(Math.random() * mediumQuestions.length)]
+        }
+        else if(localStorage.getItem('player-level') === 'Hard'){
+            return hardQuestions[Math.floor(Math.random() * hardQuestions.length)]
+        }
+        else{
+            return easyQuestions[Math.floor(Math.random() * easyQuestions.length)]
+        }
+    }
+
 	// Function to congratulate the player
     function congratulatePlayer() {
         // Display a SweetAlert with a congratulatory message
