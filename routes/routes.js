@@ -50,7 +50,7 @@ export default function routes(color){
            ;
             res.render('game', {
                 gameStart: true,
-                currentLevel: 'easy',
+                // currentLevel: 'easy',
                 score: 10,
                 randomQuestion,
                 playerName,

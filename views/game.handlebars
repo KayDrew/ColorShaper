@@ -69,8 +69,8 @@
     let questionText = document.querySelector("#question");
 
     // Set initial values for player level and level index in local storage
-    localStorage.setItem('player-level', 'easy');
-    localStorage.setItem('level-index', '0');
+     //localStorage.setItem('player-level', 'easy');
+    // localStorage.setItem('level-index', '0');
 
     // Select the HTML audio element with the ID "music"
     let audio = document.querySelector("#music");
@@ -79,7 +79,7 @@
     audio.volume = 0.2;
 
     // Split the string '{{levels}}' into an array using ',' as the delimiter
-    let levels = '{{levels}}'.split(',');
+    //let levels = '{{levels}}'.split(',');
     
     // Asynchronous function to start the game
     async function playGame() {
@@ -128,19 +128,7 @@
                                    }).then((value)=>{
 
                                     if(value){
-                                        startScanner();
-
-                                    interval = setInterval(updateCountdown, 1000)
-                                    question = randomQuestion();//easyQuestions[Math.floor(Math.random() * easyQuestions.length)];
-                                    questionText.innerText=question;
-
-                                    //reset timer
-                                    seconds=10;
-                                    playSound();
-
-                                    
-
-                                   
+                                        refreshQuestion();
                                     }   
                             
                              } );
@@ -181,7 +169,16 @@
     // Update the current level element
     const levelElement = document.querySelector('#currentLevel');
     // Set the player level from localStorage or use the default level based on the levelIndex
-    levelElement.innerText = localStorage.getItem('player-level') || levels[levelIndex];
+    let currentLevel
+
+    if(localStorage.getItem('player-level')){
+        currentLevel = localStorage.getItem('player-level');
+    }else{
+        localStorage.setItem('player-level', 'easy');
+        currentLevel = localStorage.getItem('player-level');
+    }
+
+    levelElement.innerText = currentLevel;
 
     // URL for the Teachable Machine model
     const URL = "https://teachablemachine.withgoogle.com/models/0ipS3AKwb/";
@@ -264,7 +261,7 @@
 
     function handlePrediction(probability, expectedQuestion, shapeType) {
         //'{{randomQuestion.question}}'
-        //console.log(probability,question,expectedQuestion,shapeType);
+        console.log(probability,question,expectedQuestion,shapeType);
         // Check if the predicted shape has high probability and matches the expected question
         if (probability > 0.95 && question === expectedQuestion) {
             console.log(`Shape and/or Color: ${shapeType}`);
@@ -290,20 +287,7 @@
                 button: { text: "Next", className: "btn" },
                 className: "alert"
             }).then(() => {
-
-                //start scanner
-                startScanner();
-                // Show the next question
-                question = randomQuestion();//easyQuestions[Math.floor(Math.random() * easyQuestions.length)];
-                questionText.innerText = question;
-                playSound();
-    
-               //reset timer
-                 seconds=10;
-                 interval = setInterval(updateCountdown, 1000);   
-                                  
-
-                
+                refreshQuestion();
             });
 
             // Check if the score is between 3 and 5
@@ -321,35 +305,53 @@
 
         if (score == 5) {
             // Easy level
-            // give congrats
-            congratulatePlayer();
             // Increase level to medium  
             localStorage.setItem('player-level','Medium');
             levelElement.innerText = localStorage.getItem('player-level');
-            question = randomQuestion();
+
+            // give congrats
+            congratulatePlayer();
+            
+            //question = randomQuestion();
                 //question = mediumQuestions[Math.floor(Math.random() * mediumQuestions.length)];
             // give new question based on medium level
         }else
         if (score == 8) {
             // Medium level
-            // give congrats
-            congratulatePlayer();
             // Increase level to hard
             localStorage.setItem('player-level','Hard');
             levelElement.innerText = localStorage.getItem('player-level');
-            question = randomQuestion();
+            // give congrats
+            congratulatePlayer();
+            
+            //question = randomQuestion();
                 //question = hardQuestions[Math.floor(Math.random() * hardQuestions.length)];
             // give new question based on hard level
         }else        
         if (score == 11 ) {
             // Hard level
             // give congrats on completing the game
-            congratulatePlayer();  
+            //congratulatePlayer();  
         }
         
     }
-	
+	// This function is called to show a new question and reset the timer
+    function refreshQuestion() {
+        //start scanner
+        startScanner();
+
+        // Show the next question
+        question = randomQuestion();//easyQuestions[Math.floor(Math.random() * easyQuestions.length)];
+        questionText.innerText = question;
+        playSound();
+
+        //reset timer
+        seconds=10;
+        interval = setInterval(updateCountdown, 1000);
+    }
+
     function randomQuestion(){
+        console.log('Player level: '+localStorage.getItem('player-level'));
         if(localStorage.getItem('player-level') === "Medium"){
             return mediumQuestions[Math.floor(Math.random() * mediumQuestions.length)]
         }
@@ -370,7 +372,9 @@
             icon: "success",
             button: { text: "Thanks!", className: "btn" },
             className: "alert"
-        });
+        }).then(() => {
+                refreshQuestion();
+            });
 
         // Log each element in the 'prediction' array to the console
         /*for (let i = 0; i < prediction.length; ++i) {
