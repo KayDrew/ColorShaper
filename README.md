@@ -13,6 +13,8 @@ Initiate the fun: Hit the "Start Game" button and let the magical experience beg
 Camera ready: Give a big smile to your camera friend and say "yes" to let it join the excitement.
 
 ### Instructions
+
+Head over to: https://colorshaper.onrender.com
 Follow these simple steps to enjoy the game:
 
 Show shapes and colors to your camera.
